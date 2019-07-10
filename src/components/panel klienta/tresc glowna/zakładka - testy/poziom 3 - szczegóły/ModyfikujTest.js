@@ -1,0 +1,220 @@
+import React, { PureComponent } from 'react';
+import Joi from 'joi-browser';
+import { MDBInput, MDBBtn } from "mdbreact";
+import { confirmAlert } from 'react-confirm-alert';
+import { NotificationManager } from 'react-notifications';
+import RadioCheckbox from '../../../../współne/RadioCheckbox';
+import ZmienAvatar from './ZmienAvatar';
+import użytkownikService from '../../../../../services/użytkownikService';
+
+class ModyfikowanieTestu extends PureComponent {
+    constructor(props){
+        super(props);
+        this.state = {
+            daneTestu: {
+                nazwa: "",
+                modyfikowal: {id: "", nazwa: "" },
+                publiczny: false,
+                ktoWidziTest: {id: "", nazwa: "" },
+                krotkiOpis: "",
+                avatar: "",
+                limitCzasowy : {
+                    czyLimit: false,
+                    minuty: 0,
+                    sekundy: 0
+                },
+                instrukcja: "",
+            },
+            nazwa: "",
+            radio: props.test.ktoWidziTest._id,
+        };
+    }
+
+    schemaModyfikowanyTest = Joi.object().keys({
+        nazwa: Joi.string().min(1).max(60).required().error( () => {return { message: "Nazwa testu musi posiadać między 1 a 70 znaków"};} ),
+        limitCzasowy: Joi.object().keys({
+            sekundy: Joi.number().max(59).error( () => {return { message: "Limit czasu -> maksymalna wartość dla sekund to 59"};} )
+        }).unknown(true)
+    }).unknown(true);
+    
+    walidujDane(daneTestu){
+        const { error } = Joi.validate(daneTestu, this.schemaModyfikowanyTest);
+        return error ? error.details[0].message : null;
+    };
+
+    componentDidMount() {
+        this.początkoweUstawienia();
+    }
+    początkoweUstawienia = () => {
+        const daneTestu = this.zwróćKontekstZmian();
+        this.setState({ daneTestu, radio: daneTestu.ktoWidziTest._id })
+    }
+    zwróćKontekstZmian(){
+        const { test } = this.props;
+        return {
+            _id: test._id,
+            nazwa: test.nazwa,
+            modyfikowal: test.modyfikowal,
+            publiczny: test.publiczny,
+            ktoWidziTest: {
+                _id: test.ktoWidziTest._id,
+                nazwa: test.ktoWidziTest.nazwa
+            },
+            krotkiOpis: test.krotkiOpis,
+            avatar: test.avatar,
+            limitCzasowy : {
+                czyLimit: test.limitCzasowy.czyLimit,
+                minuty: test.limitCzasowy.minuty,
+                sekundy: test.limitCzasowy.sekundy
+            },
+            instrukcja: test.instrukcja,
+        };
+    }
+    wprowadzanieZmian = ({currentTarget: input}) => {
+        const daneTestu = { ...this.state.daneTestu };
+        if(input.name === "czyLimit" || input.name ===  "minuty" || input.name === "sekundy")
+            daneTestu.limitCzasowy[input.name] = input.name === "czyLimit" ? input.checked : input.value;
+        else daneTestu[input.name] = input.value;
+        this.setState({ daneTestu })
+    }
+
+    zaznaczDostępTestu = (radio, ktoWidziTest) => {
+        const daneTestu = { ...this.state.daneTestu };
+        daneTestu.ktoWidziTest = {
+            _id: ktoWidziTest._id,
+            nazwa: ktoWidziTest.nazwa
+        };
+        this.setState({ radio, daneTestu });
+    }
+
+    zmieńAvatar = avatar => {
+        const daneTestu = { ...this.state.daneTestu };
+        daneTestu.avatar = avatar;
+        this.setState({daneTestu})
+    }
+    
+    sprZaznaczenie(wartość){
+        return this.state.radio === wartość;
+    }
+
+    czyDokonanoZmian(){
+        const test = this.zwróćKontekstZmian();
+        return JSON.stringify(this.state.daneTestu) === JSON.stringify(test)
+    }
+
+    uruchomOstrzeżenieDlaTestu = (test) => {
+        confirmAlert({
+        customUI: ({ onClose }) => {
+            return (
+            <div className='react-confirm-alert__body'>
+                <h1>Ostrzeżenie</h1>
+                <p>Operacji nie będzie można cofnąć.</p>
+                <p className="mt-2 m-0">Czy napewno chcesz usunąć ten test?</p>
+                <p className="ml-3 mt-0 font-italic text-danger">{`- ${test.nazwa}`}</p>
+                <div className="d-flex">
+                    <MDBBtn onClick={onClose} color="danger" size="sm">Nie</MDBBtn>
+                    <MDBBtn onClick={ () => { this.props.onUsuńTest(test); onClose() }} color="success" size="sm">Tak</MDBBtn>
+                </div>
+            </div>
+            );
+        }
+        });
+    };
+
+    uruchomOkienkoWyboruAvatara = (aktualnieWybranyAvatar) => {
+        confirmAlert({
+        customUI: ({ onClose }) => {
+            return (
+                <ZmienAvatar aktualnieWybranyAvatar={aktualnieWybranyAvatar} onZmieńAvatar={this.zmieńAvatar} onClose={onClose}/>
+            );
+        }
+        });
+    };
+
+    sprawdźDaneIWyślijDoZapisu = () => {
+        const { daneTestu } = this.state;
+        const błąd = this.walidujDane(daneTestu);
+        if(błąd){
+            NotificationManager.error(błąd);
+            return;
+        }
+        this.props.onZapiszZmiany(daneTestu)
+    }
+
+    render() { 
+        const { daneTestu: test } = this.state;
+        const użytkownik = użytkownikService.getUserFromJWT();
+        const dokonanoZmian = this.czyDokonanoZmian();
+        const użytkownikNależyDoGrupy = użytkownik.firma.nazwa !== "" ? true : false;
+        return ( 
+            <main className="text-left p-3">
+                <hr className="mt-0"/>
+                <div className="d-flex justify-content-between">
+                    <h5 className="font-weight-bold mb-4">MODYFIKOWANIE TESTU</h5>
+                    <div>
+                        <MDBBtn color="danger" size="sm" outline onClick={ () => this.uruchomOstrzeżenieDlaTestu(test) } >Usuń test</MDBBtn>
+                        <MDBBtn color="danger" size="sm" disabled={dokonanoZmian} onClick={this.początkoweUstawienia}>Resetuj</MDBBtn>
+                        <MDBBtn color="success" size="sm" disabled={dokonanoZmian} onClick={ this.sprawdźDaneIWyślijDoZapisu  }>Zatwierdź zmiany</MDBBtn>
+                    </div>
+                </div>
+
+                <span className="font-weight-bold">Opis</span>
+                <MDBInput label="Nazwa testu" value={ test.nazwa } className="mr-5" name="nazwa" onChange={this.wprowadzanieZmian} />
+                <MDBInput label="Krótki opis" value={ test.krotkiOpis } className="mr-5" name="krotkiOpis" onChange={this.wprowadzanieZmian}/>
+
+
+                <div className="mb-3 d-flex flex-column">
+                        <span className="font-weight-bold">Awatar</span>
+                        <div className="d-flex align-items-center">
+                            <p className="mr-2 m-0">Aktualny:</p>
+                                <div className="panel-klienta__tresc_test-modyfikuj-avatar-avatar"
+                                    style={{backgroundImage: `url("/images/avatary/${test.avatar}")`, cursor: 'pointer', }}
+                                    onClick={ () => this.uruchomOkienkoWyboruAvatara(test.avatar) }>
+                                </div>
+
+                        </div>
+                </div>
+
+                <div className="mb-3">
+                    <span className="font-weight-bold">Dostęp do testu</span>
+                    <RadioCheckbox etykieta={ "Tylko Ty (" + użytkownik.nazwa + ")" } _id={test._id + "radio1"}
+                                    zaznaczenie={this.sprZaznaczenie(użytkownik._id)}
+                                    onZmiana= {() => this.zaznaczDostępTestu(użytkownik._id, użytkownik)}
+                    />
+                    
+                    { użytkownikNależyDoGrupy &&
+                        <RadioCheckbox etykieta={ `Grupa ${użytkownik.firma.nazwa}`} _id={test._id + "radio3"}
+                                        zaznaczenie={this.sprZaznaczenie(użytkownik.firma._id)}
+                                        onZmiana= {() => this.zaznaczDostępTestu(użytkownik.firma._id, użytkownik.firma)}
+                        />
+                    }
+
+                    <RadioCheckbox etykieta="Wszyscy użytkownicy portalu" _id={test._id + "radio4"}
+                                    zaznaczenie={this.sprZaznaczenie("")}
+                                    onZmiana= {() => this.zaznaczDostępTestu("", {id: "", nazwa: ""} )}
+                    />
+                </div>     
+
+                <span className="font-weight-bold">Czas trwania testu</span>
+                <div className="mb-3 m-0 p-0">
+                    <div className="custom-control custom-checkbox">
+                        <input name="czyLimit" type="checkbox" checked={test.limitCzasowy.czyLimit} className="custom-control-input" id={test.nazwa + "checkbox1"} onChange={this.wprowadzanieZmian} />
+                        <label className="custom-control-label" htmlFor={test.nazwa + "checkbox1"} >Limit czasowy</label>
+                    </div>
+                    { this.state.daneTestu.limitCzasowy.czyLimit && 
+                        <div className="animated fadeIn">
+                            <MDBInput name="minuty"  type="number" label="Minuty" value={ test.limitCzasowy.minuty } className="m-0" onChange={this.wprowadzanieZmian}/>
+                            <MDBInput name="sekundy" type="number" label="Sekundy" value={ test.limitCzasowy.sekundy } className="m-0" onChange={this.wprowadzanieZmian}/>
+                        </div>
+                    }
+                </div>
+                
+                <span className="font-weight-bold">Instrukcja</span>
+                <MDBInput name="instrukcja" type="textarea" label="Treść instrukcji" rows='10' value={test.instrukcja} onChange={this.wprowadzanieZmian}/>
+
+            </main>
+         );
+    }
+}
+ 
+export default ModyfikowanieTestu;

@@ -1,0 +1,78 @@
+
+.logo{
+    &__pojemnik{
+        // width: 40px;
+        // height: 40px;
+    };
+    &__logo, 
+    &__logo::before, 
+    &__logo::after{
+        // width: 40px;
+        // height: 40px;
+        border-top-style: solid;
+
+        border-radius: 50%;
+    };
+    &__logo{
+        border-top-color: red;
+        position: relative;
+
+
+        &::before,
+        &::after{
+            content: '';
+            position: absolute; 
+        top: 0%;
+        left: 0%;
+        transform: translate(-50%, -50%);
+        }
+        &::before{
+            border-top-color: green;
+            transform: rotate(120deg);
+        }
+        &::after{
+            border-top-color: blue;
+            transform: rotate(240deg);
+        }
+
+    }
+}
+
+// Rozmiar 40px x 40px
+.logo40x40,
+.logo40x40::before,
+.logo40x40::after{
+        width: 40px;
+        height: 40px;
+        border-top-width: 3px;
+    }
+.logo40x40::before,
+.logo40x40::after{
+    top: -3px;
+}
+
+// Rozmiar 20px x 20px
+.logo20x20,
+.logo20x20::before,
+.logo20x20::after{
+        width: 20px;
+        height: 20px;
+        border-top-width: 2px;
+    }
+.logo20x20::before,
+.logo20x20::after{
+    top: -2px;
+}
+
+.logo-obrot{
+    animation: obrot infinite linear 1.2s;
+}
+
+@keyframes obrot{
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(359deg);
+    }
+}

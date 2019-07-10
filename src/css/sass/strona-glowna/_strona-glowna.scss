@@ -1,0 +1,65 @@
+.strona-glowna{
+    height: 100vh;
+    overflow: hidden;
+
+    &::before{
+        content: "";
+        z-index: -1;
+        position: absolute;
+        top: 0px;
+        height: calc( 100vh - 70px);
+        width: 100%;
+        background-image: url('css/images/tlo2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    
+    &__naglowek{
+        height: 70px;
+        // &_przycisk-logowania{
+        //     width: 150px;
+        //     height: 100%;
+        //     display: flex;
+        //     justify-content: center;
+        // }
+    }
+    &__weryfikacja-kodu{
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translate(0,-50%);
+        margin-right: 50px;
+        &_strefa-klienta{
+            height: 400px;
+            background: rgba(255,255,255,0.9);
+            border: 3px solid #0d47a1;
+            padding: 20px;
+            width: 400px;
+        }
+        &_przycisk {
+            height: 50px;
+        }
+    }
+
+    &__rejestracja-uzytkownika{
+        background: rgba(255,255,255,0.9);
+        border: 3px solid #0d47a1;
+        padding: 20px;
+        min-width: 30vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        &_informacja{
+            width: 40vw;
+        }
+    }
+
+    &__stopka{
+        position: absolute;
+        bottom: 0;
+        width: 100vw;
+        height: 70px;
+    }
+}

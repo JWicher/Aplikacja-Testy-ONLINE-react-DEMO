@@ -1,0 +1,38 @@
+export function zwróćListęAvatarów(){
+    return listaAvatarów;
+}
+
+const listaAvatarów = [
+    "i_001.jpg",
+    "i_002.jpg",
+    "i_003.jpg",
+    "i_004.jpg",
+    "i_005.jpg",
+    "i_006.jpg",
+    "i_007.jpg",
+    "i_008.jpg",
+    "i_009.jpg",
+    "i_010.jpg",
+    "i_011.jpg",
+    "i_012.jpg",
+    "i_013.jpg",
+    "i_014.jpg",
+    "i_015.jpg",
+    "i_016.jpg",
+    "i_017.jpg",
+    "i_018.jpg",
+    "i_019.jpg",
+    "i_020.jpg",
+    "i_021.jpg",
+    "i_022.jpg",
+    "i_023.jpg",
+    "i_024.jpg",
+    "i_025.jpg",
+    "i_026.jpg",
+    "i_027.jpg",
+    "i_028.jpg",
+    "i_029.jpg",
+    "i_030.jpg",
+    "i_031.jpg",
+    "i_032.jpg",
+]

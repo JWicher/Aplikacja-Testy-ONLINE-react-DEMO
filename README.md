@@ -4,7 +4,8 @@ Aplikacja głównie dla rekruterów.
 Cel: automatyzacja testów kompetencji kandydatów.
 
 ### Demo:
-Wersja demonstracyjna: [https://jw-testy-online.herokuapp.com/](jw-testy-online.herokuapp.com)
+Wersja demonstracyjna: [//jw-testy-online.herokuapp.com/](https://jw-testy-online.herokuapp.com)
+<br/>
 
 <img src="prezentacja/pogląd.png" alt="pogląd">
 
@@ -20,7 +21,6 @@ Wersja demonstracyjna: [https://jw-testy-online.herokuapp.com/](jw-testy-online.
 
 ## UŻYTE TECHNOLOGIE
 <img src="prezentacja/stack-frontend.png" alt="użyte technologie">
-<br/>
 
 #### **_Ponadto_**
 
@@ -77,14 +77,15 @@ Aby dodać, modyfikować lub usunąć zadania należy kliknąć dany test, a nas
 <img src="prezentacja/3_dodawanie_zadania_przysp_2x.gif" alt="dodawanie zadania">
 
 
-#### **Generowanie kodu dostępu do testu.**
+### **_3. Generowanie kodu dostępu do testu._**
 Kod dostępu do testu umożliwia uruchomienie sprawdzianu przez kandydata. Generator jest dostępny tylko jeżeli test zawiera przynajmniej jedno zadanie. Przycisk kreowania kodu powoduje utworzenie obiektu, w którym zapisywany jest obecny stan zadań i innych danych testu, jak np. limit czasowy. Wszelkie modyfikacje testu nie mają wpływu na wcześniej wytworzone kody. Serwer posiada funkcję tworzenia unikatowego 13-znakowego kodu, który jest zwracany do klienta i dołączany do ww. obiektu.
 
 <img src="prezentacja/4_generowanie_kodów_testu_2x.gif" alt="użyte technologie">
 
 
-#### **Uruchamianie testu.**
-Kandydat może uruchomić kod tylko dzieki otrzymanemu od rekrutera kodu dostępu do testu. Miejsce gdzie, należy go umieścić znajduje się w widocznym miejscu na stronie startowej aplikacji. Wciśnięcie przycisku "ROZPOCZNIJ" spowoduje odcięcie białych znaków przed i za tekstem reprezentującym kod oraz wysłanie kodu na serwer. Próba zostanie odrzucona, gdy:
+### **_4. Uruchamianie testu._**
+Kandydat może uruchomić kod tylko dzieki otrzymanemu od rekrutera kodu dostępu do testu. Miejsce gdzie, należy go umieścić znajduje się w widocznym miejscu na stronie startowej aplikacji. Wciśnięcie przycisku "ROZPOCZNIJ" spowoduje odcięcie białych znaków przed i za tekstem reprezentującym kod oraz wysłanie kodu na serwer.
+Próba zostanie odrzucona, gdy:
 - kod nie znajduje sie w bazie danych,
 - lub został już wykorzystany.
 <br/>
@@ -99,7 +100,7 @@ W górnej części znajduje się nagłówek wraz z zegarem pokazującym pozosta�
 <img src="prezentacja/6_wypełnianie_testu_przysp_4x.gif" alt="użyte technologie">
 
 
-#### **Wyniki.**
+### **_5. Wyniki._**
 Po wciśnięciu przycisku 'WYŚLIJ WYNIKI" lub upływie dozwolonego czasu wyniki są wysyłane na serwer. Na podstawie tych informacji jest tworzony plik PDF i wysyłany na adres mailowy rekrutera. Możliwe jest również wygenerowanie pliku .pdf w dowolnej chwili w zakładce "KODY DOSTĘPU".
 
 <img src="prezentacja/7_wysłanie_testu_i_przegląd_poczty_w_wynikiem_przysp_2x.gif" alt="użyte technologie">

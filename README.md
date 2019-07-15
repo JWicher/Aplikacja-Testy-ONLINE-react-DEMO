@@ -1,4 +1,5 @@
 ## UWAGI
+
 Jest to demonstracyjne repozytorium, tzn. posiada tylko część kodu.
 <img src="prezentacja/1-rejestracja.gif" alt="użyte technologie">
 <img src="prezentacja/2-logowanie-i-dodawanie-testu.gif" alt="użyte technologie">

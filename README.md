@@ -5,6 +5,7 @@ Cel: automatyzacja testów kompetencji kandydatów.
 
 ### Demo:
 Wersja demonstracyjna: [https://jw-testy-online.herokuapp.com/](jw-testy-online.herokuapp.com)
+
 <img src="prezentacja/pogląd.png" alt="pogląd">
 
 ### Zalety aplikacji:
@@ -22,7 +23,6 @@ Wersja demonstracyjna: [https://jw-testy-online.herokuapp.com/](jw-testy-online.
 <br/>
 
 #### **_Ponadto_**
-<br/>
 
 Fontend:
 - wymuszenie stosowania protokołu https (przekierowanie http -> https),
@@ -63,41 +63,43 @@ Layout:
 - góra: nagłówek,
 - lewa strona: menu nawigacyjne po panelu klienta,
 - prawa strona: część robocza, wyświetlanie danych.
+<br/>
 
-##### **_Dodawanie nowego testu._**
+#### **Dodawanie nowego testu.**
 Kliknięcie w zakładkę "TESTY" spowoduje wyświetlenie widoku prezentującego dostępne testy wraz z przyciskiem dodawania.
 
 <img src="prezentacja/2_logowanie_i_dodawanie_testu_przysp_2x.gif" alt="logowanie i dodawanie nowego testu">
 
 
-##### **_Zadania._**
+#### **Zadania.**
 Aby dodać, modyfikować lub usunąć zadania należy kliknąć dany test, a następnie przycik "ZADANIA". Tryb edycji umożliwia usunięcie niezapisanych zmian.
 
 <img src="prezentacja/3_dodawanie_zadania_przysp_2x.gif" alt="dodawanie zadania">
 
 
-##### **_Generowanie kodu dostępu do testu._**
+#### **Generowanie kodu dostępu do testu.**
 Kod dostępu do testu umożliwia uruchomienie sprawdzianu przez kandydata. Generator jest dostępny tylko jeżeli test zawiera przynajmniej jedno zadanie. Przycisk kreowania kodu powoduje utworzenie obiektu, w którym zapisywany jest obecny stan zadań i innych danych testu, jak np. limit czasowy. Wszelkie modyfikacje testu nie mają wpływu na wcześniej wytworzone kody. Serwer posiada funkcję tworzenia unikatowego 13-znakowego kodu, który jest zwracany do klienta i dołączany do ww. obiektu.
 
 <img src="prezentacja/4_generowanie_kodów_testu_2x.gif" alt="użyte technologie">
 
 
-##### **_Uruchamianie testu._**
+#### **Uruchamianie testu.**
 Kandydat może uruchomić kod tylko dzieki otrzymanemu od rekrutera kodu dostępu do testu. Miejsce gdzie, należy go umieścić znajduje się w widocznym miejscu na stronie startowej aplikacji. Wciśnięcie przycisku "ROZPOCZNIJ" spowoduje odcięcie białych znaków przed i za tekstem reprezentującym kod oraz wysłanie kodu na serwer. Próba zostanie odrzucona, gdy:
 - kod nie znajduje sie w bazie danych,
 - lub został już wykorzystany.
+<br/>
 
 <img src="prezentacja/5_logowanie_kodem_do_testu_przysp_2x.gif" alt="użyte technologie">
 
 
-##### **Wypełnianie testu._**
+#### **Wypełnianie testu.**
 Przed rozpoczęciem testu wyświetlana jest instrukcja. W tym kroku kandydat jest zobowiązany do podania imienia i nazwiska. Po spełnieniu tego warunku możliwe jest przystąpienie do wypełniania testu poprzez wcisnięcie przycisku "START".
 W górnej części znajduje się nagłówek wraz z zegarem pokazującym pozostały czas, sumą udzielonych odpowiedzi oraz z przyciskiem wysłania odpowiedzi. Zadania zamknięte posiadają możliwośc zaznaczenia tylko jednej pozycji, a zadania otwarte mają blokadę wklejania treści. 
 
 <img src="prezentacja/6_wypełnianie_testu_przysp_4x.gif" alt="użyte technologie">
 
 
-##### **Wyniki._**
+#### **Wyniki.**
 Po wciśnięciu przycisku 'WYŚLIJ WYNIKI" lub upływie dozwolonego czasu wyniki są wysyłane na serwer. Na podstawie tych informacji jest tworzony plik PDF i wysyłany na adres mailowy rekrutera. Możliwe jest również wygenerowanie pliku .pdf w dowolnej chwili w zakładce "KODY DOSTĘPU".
 
 <img src="prezentacja/7_wysłanie_testu_i_przegląd_poczty_w_wynikiem_przysp_2x.gif" alt="użyte technologie">

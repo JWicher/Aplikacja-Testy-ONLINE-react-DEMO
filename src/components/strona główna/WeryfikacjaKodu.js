@@ -30,11 +30,11 @@ class WeryfikacjaKodu extends Component {
 
             try{
 
-                const obiektKoduDostępu = await kodTestutService.weryfikujKod( kod )
+                const obiektKoduDostępu = await kodTestutService.zdobądźTest( kod )
                 localStorage.setItem("obiektKoduDostępu", JSON.stringify(obiektKoduDostępu) )
                 const odpowiedzi = obiektKoduDostępu.test.zadania.map( zadanie => zadanie = {numerZadania: zadanie.numer, odpowiedz: { tresc: ""} })
                 localStorage.setItem("odpowiedzi", JSON.stringify(odpowiedzi) );
-                window.location = "/test"
+                window.location = "/test/instrukcja"
             }
             catch(ex){
                 if(ex.response && ex.response.data ) {
@@ -51,12 +51,9 @@ class WeryfikacjaKodu extends Component {
     };
 
     przeczyśćCoTrzeba(){
-            // localStorage.clear();
             localStorage.removeItem("obiektKoduDostępu");
             localStorage.removeItem("odpowiedzi");
-            localStorage.removeItem("momentStartu");
             localStorage.removeItem("czas");
-            localStorage.removeItem("rozpoczętoTest");
     }
     wprowadzanieKodu = ({currentTarget}) => {
         const kod = currentTarget.value.trim();

@@ -1,8 +1,9 @@
 import React, { Component }  from 'react';
 import { Route, Switch } from 'react-router-dom';
+import ChronionaSciezka from './components/współne/ChronionaSciezka';
 import StronaGlowna from './components/strona główna/StronaGlowna';
-import Test from './components/test/Test';
-import InformacjaKońcowa from './components/test/InformacjaKońcowa';
+import TestWezel from './components/test/TestWezel';
+// import InformacjaKońcowa from './components/test/InformacjaKońcowa';
 import PanelKlienta from './components/panel klienta/PanelKlienta';
 import {NotificationContainer} from 'react-notifications';
 import './main.css';
@@ -19,9 +20,16 @@ class App extends Component {
       <div className="App">
         <NotificationContainer/>
         <Switch>
-            <Route path="/panel-klienta" component={PanelKlienta} />
-            <Route path="/test/informacja-koncowa" component={InformacjaKońcowa} />
-            <Route path="/test" component={Test} />
+
+        {/* <ProtectedRoute path="/show-data/:id" requireUserLevel={"Operator"} redirectPath="/login" component={ShowData}/> */}
+
+        <ChronionaSciezka path="/panel-klienta" component={PanelKlienta} warunek="użytkownik" />
+        {/* <Route path="/panel-klienta" component={PanelKlienta} /> */}
+
+        <ChronionaSciezka path="/test" component={TestWezel} warunek="kod" />
+        {/* <Route path="/test/instrukcja" component={TestWezel} /> */}
+
+            {/* <Route path="/test/informacja-koncowa" component={InformacjaKońcowa} /> */}
             <Route path="/" component={StronaGlowna} />
         </Switch>
 

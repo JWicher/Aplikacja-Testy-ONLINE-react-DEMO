@@ -13,7 +13,6 @@ class ModyfikowanieTestu extends PureComponent {
         this.state = {
             daneTestu: {
                 nazwa: "",
-                modyfikowal: {id: "", nazwa: "" },
                 publiczny: false,
                 ktoWidziTest: {id: "", nazwa: "" },
                 krotkiOpis: "",
@@ -25,13 +24,13 @@ class ModyfikowanieTestu extends PureComponent {
                 },
                 instrukcja: "",
             },
-            nazwa: "",
             radio: props.test.ktoWidziTest._id,
         };
     }
 
     schemaModyfikowanyTest = Joi.object().keys({
-        nazwa: Joi.string().min(1).max(60).required().error( () => {return { message: "Nazwa testu musi posiadać między 1 a 70 znaków"};} ),
+        nazwa: Joi.string().min(1).max(60).required().error( () => {return { message: "Nazwa testu może mieć między 1 a 60 znaków"};} ),
+        krotkiOpis: Joi.string().min(1).max(60).required().error( () => {return { message: "Opis testu może mieć między 1 a 60 znaków"};} ),
         limitCzasowy: Joi.object().keys({
             sekundy: Joi.number().max(59).error( () => {return { message: "Limit czasu -> maksymalna wartość dla sekund to 59"};} )
         }).unknown(true)
@@ -132,13 +131,18 @@ class ModyfikowanieTestu extends PureComponent {
     };
 
     sprawdźDaneIWyślijDoZapisu = () => {
-        const { daneTestu } = this.state;
-        const błąd = this.walidujDane(daneTestu);
+        const { daneTestu: zmiany } = this.state;
+        const błąd = this.walidujDane(zmiany);
         if(błąd){
             NotificationManager.error(błąd);
             return;
         }
-        this.props.onZapiszZmiany(daneTestu)
+
+        zmiany.nazwa = zmiany.nazwa.trim();
+        zmiany.krotkiOpis = zmiany.krotkiOpis.trim();
+        zmiany.instrukcja = zmiany.instrukcja.trim();
+
+        this.props.onZapiszZmiany(zmiany)
     }
 
     render() { 
@@ -146,6 +150,7 @@ class ModyfikowanieTestu extends PureComponent {
         const użytkownik = użytkownikService.getUserFromJWT();
         const dokonanoZmian = this.czyDokonanoZmian();
         const użytkownikNależyDoGrupy = użytkownik.firma.nazwa !== "" ? true : false;
+
         return ( 
             <main className="text-left p-3">
                 <hr className="mt-0"/>
@@ -159,8 +164,8 @@ class ModyfikowanieTestu extends PureComponent {
                 </div>
 
                 <span className="font-weight-bold">Opis</span>
-                <MDBInput label="Nazwa testu" value={ test.nazwa } className="mr-5" name="nazwa" onChange={this.wprowadzanieZmian} />
-                <MDBInput label="Krótki opis" value={ test.krotkiOpis } className="mr-5" name="krotkiOpis" onChange={this.wprowadzanieZmian}/>
+                <MDBInput label="Nazwa testu" autoComplete="off" value={ test.nazwa } className="mr-5" name="nazwa" onChange={this.wprowadzanieZmian} />
+                <MDBInput label="Krótki opis" autoComplete="off" value={ test.krotkiOpis } className="mr-5" name="krotkiOpis" onChange={this.wprowadzanieZmian}/>
 
 
                 <div className="mb-3 d-flex flex-column">
@@ -203,14 +208,14 @@ class ModyfikowanieTestu extends PureComponent {
                     </div>
                     { this.state.daneTestu.limitCzasowy.czyLimit && 
                         <div className="animated fadeIn">
-                            <MDBInput name="minuty"  type="number" label="Minuty" value={ test.limitCzasowy.minuty } className="m-0" onChange={this.wprowadzanieZmian}/>
-                            <MDBInput name="sekundy" type="number" label="Sekundy" value={ test.limitCzasowy.sekundy } className="m-0" onChange={this.wprowadzanieZmian}/>
+                            <MDBInput name="minuty"  type="number" label="Minuty" autoComplete="off" value={ test.limitCzasowy.minuty } className="m-0" onChange={this.wprowadzanieZmian}/>
+                            <MDBInput name="sekundy" type="number" label="Sekundy" autoComplete="off" value={ test.limitCzasowy.sekundy } className="m-0" onChange={this.wprowadzanieZmian}/>
                         </div>
                     }
                 </div>
                 
                 <span className="font-weight-bold">Instrukcja</span>
-                <MDBInput name="instrukcja" type="textarea" label="Treść instrukcji" rows='10' value={test.instrukcja} onChange={this.wprowadzanieZmian}/>
+                <MDBInput name="instrukcja" type="textarea" label="Treść instrukcji" autoComplete="off" rows='10' value={test.instrukcja} onChange={this.wprowadzanieZmian}/>
 
             </main>
          );

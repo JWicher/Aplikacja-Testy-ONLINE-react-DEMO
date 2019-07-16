@@ -8,6 +8,7 @@ class PanelKlientaTesPoziom3 extends PureComponent {
     state = {  }
     render() { 
         const { test, activeItem } = this.props;
+
         return ( 
                 <MDBTabContent activeItem={activeItem} >
                     <MDBTabPane className="animated fadeIn" tabId="1" role="tabpanel">

@@ -41,12 +41,12 @@ class PanelKlientaTest extends PureComponent {
   };
   onZapiszZmianyIZwińTest = (zmiany) => {
     this.props.onZapiszZmiany(zmiany);
-
     if(!zmiany.zadania)
       this.setState({ activeItem:''});
   }
   render() { 
     const { test } = this.state;
+    if (!test) return <p>Brak testu</p>;
 
     return (
         <div className="panel-klienta__tresc p-0 border-1 border-primary btn-block">

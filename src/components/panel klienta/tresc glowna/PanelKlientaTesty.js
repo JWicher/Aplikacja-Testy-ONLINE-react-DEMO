@@ -48,8 +48,6 @@ class PanelKlientaTesty extends Component {
             const nowyTest = await testService.zarejstrujNowyTest(szkieletPustegoTestu);
             testy.unshift(nowyTest);
             this.setState({testy});
-            NotificationManager.success("Dodano nowy test");
-
         }
         catch(błąd){
             if(błąd.response) {
@@ -74,7 +72,6 @@ class PanelKlientaTesty extends Component {
     }
     zapiszZmiany = async (testZeZmianą) => {
         try{
-           const testy = [...this.state.testy];
            const użytkownik = użytkownikService.getUserFromJWT();
 
            testZeZmianą.modyfikowal = {
@@ -84,6 +81,8 @@ class PanelKlientaTesty extends Component {
             };
 
            const zapisaneDaneTestu = await testService.zmodyfikujTest(testZeZmianą._id, testZeZmianą);
+
+           const testy = [...this.state.testy];
            const indeks = testy.findIndex( test => test._id === zapisaneDaneTestu._id )
            testy[indeks] = zapisaneDaneTestu;
 
@@ -100,6 +99,7 @@ class PanelKlientaTesty extends Component {
   
     render() { 
         const { testy } = this.state;
+
         return ( 
             <div>
                 <MDBBtn color="success" onClick={ this.dodajTest } >Dodaj test</MDBBtn>

@@ -55,6 +55,12 @@ class Zadanie extends Component {
             return; 
         }
         this.przełączTrybEdycji();
+
+        zadanie.tresc = zadanie.tresc.trim();
+        zadanie.opcje_wyboru = zadanie.opcje_wyboru.map( opcja => Object.assign( {}, opcja, 
+            { tresc: opcja.tresc.trim() }
+        ))
+
         this.props.onWyślijZmianyZadań(zadanie);
     }
     odrzućZmiany = () => {

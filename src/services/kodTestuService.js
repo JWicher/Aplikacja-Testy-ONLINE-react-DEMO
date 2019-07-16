@@ -8,7 +8,7 @@ export async function getKodyTestów(){
     const { data } = await httpService.get(apiEndPoint);
     return data.reverse();
 }
-export async function weryfikujKod(kodTestu){
+export async function zdobądźTest(kodTestu){
     const { data } = await httpService.get(apiEndPoint + "/" + kodTestu);
     return data;
 }
@@ -42,7 +42,7 @@ export async function ściągnijPlikPDFZWynikami(kodTestu){
 export default {
     getKodyTestów,
     postKodTestu,
-    weryfikujKod,
+    zdobądźTest,
     aktualizujObiektKodu,
     usuńKodTestu,
     ściągnijPlikPDFZWynikami

@@ -17,8 +17,6 @@ class InformacjaPotwierdzenieKonta extends Component {
         try{
             const _id = this.props.match.params.id;
             await użytkownikService.zaktualizujDaneUżytkownika( {_id, potwierdzonyProfil: true} );
-
-            NotificationManager.success("Zarejestrowano pomyślnie")
             this.setState({potwierdzonyProfil: true})
         }
         catch(błąd){
@@ -38,7 +36,7 @@ class InformacjaPotwierdzenieKonta extends Component {
                         
                         { potwierdzonyProfil ? wiadomośćPotwierdzenie : wiadomośćNegacja }
                      
-                         <Link to="/rejestracja">
+                         <Link to="/">
                              <div className="d-flex justify-content-center mt-2">
                                  <MDBBtn color="default" onClick={ () => this.props.zamieńPrzycisk("kod")} >OK</MDBBtn>
                              </div>

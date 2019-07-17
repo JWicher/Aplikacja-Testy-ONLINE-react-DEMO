@@ -32,6 +32,7 @@ Frontend:
 - joi-browser - walidacja wprowadzanych danych,
 - przyspieszenie renderowania strony przez użycie bibliotek react-window i react-virtualized-auto-sizer,
 - użycie Gulp.js do kompilowania stylów CSS z .scss,
+- stworzenie komponentu blokująego dostęp do wskazanych ścieżek URL, gdy użytkownik nie ma odpowiednich uprawnień,
 - stosowanie plików .env dla środowisk development i production (inne bazy danych, inne adresy API node),
 - zastosowanie react-confirm-alert z własnymi stylami okienek,
 - dodatkowe biblioteki pomocnicze: babel-polyfill, axios, react-notifications, file-saver, jwt-decode, font-awesome.
@@ -44,7 +45,7 @@ Backend:
 - bezpieczna i szybka autoryzacja użytkowników z wykorzystaniem JSON Web Token,
 - przechowywanie wrażliwych danych w zmiennych środowiskowych na serwerze, np. adres bazy danych,* \"salt"*,
 - @hapi/joi - walidacja otrzymanych danych od użytkowników,
-- baza danych - mongoDB, mongoose, modele i obsługa zapytań,
+- baza danych - mongoDB, mongoose, modele i zapytania,
 - generowanie pliku PDF z danych obiektu JSON - własny szablon .hbr + biblioteka puppeteer,
 - obsługa operacji CRUD przez interfejsy API wg zasobów, np. api/tests, api/users,
 - biblioteki pomocnicze: fs-extra, handlebars, nodemailer, helmet, compression, font-awesome, cors, puppeteer, mdbreact,

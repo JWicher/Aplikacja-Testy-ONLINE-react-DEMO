@@ -32,7 +32,7 @@ Frontend:
 - joi-browser - walidacja wprowadzanych danych,
 - przyspieszenie renderowania strony przez użycie bibliotek react-window i react-virtualized-auto-sizer,
 - użycie Gulp.js do kompilowania stylów CSS z .scss,
-- stworzenie komponentu blokująego dostęp do wskazanych ścieżek URL, gdy użytkownik nie ma odpowiednich uprawnień,
+- stworzenie komponentu blokująego dostęp do wskazanych ścieżek URL, gdy użytkownik nie ma uprawnień,
 - stosowanie plików .env dla środowisk development i production (inne bazy danych, inne adresy API node),
 - zastosowanie react-confirm-alert z własnymi stylami okienek,
 - dodatkowe biblioteki pomocnicze: babel-polyfill, axios, react-notifications, file-saver, jwt-decode, font-awesome.

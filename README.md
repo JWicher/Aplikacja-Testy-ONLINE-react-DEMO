@@ -10,13 +10,13 @@ Wersja demonstracyjna: [//jw-testy-online.herokuapp.com/](https://jw-testy-onlin
 <img src="prezentacja/pogląd.png" alt="Zdjęcie poglądowe jw. testów online">
 
 ### Zalety aplikacji:
-- wyniki testu dostępne natychmiast po jego wypełnieniu przez kandydata,
+- wyniki testu dostępne w ciągu chwili od jego zakończeniu przez kandydata,
 - generowanie pliku PDF z wynikami tak, jakby kandydat wypełnił test papierowy,
 - działa na różnych przeglądarkach, w tym na IE,
 - przyjemny interfejs, stosowanie efektów na elementy interaktywne,
 - możliwość udostępniania własnego testu innym osobom,
 - zapis szczegółów testu dla każdego kodu, zmiana nie wypływa na te już wygenerowane,
-- wystarczy przesłać kod i adres aplikacji do kandydata i czekać na wyniki,
+- wystarczy przesłać kod oraz adres aplikacji i czekać na wyniki.
 <br/>
 
 ## UŻYTE TECHNOLOGIE
@@ -30,7 +30,7 @@ Frontend:
 - wykorzystanie klas i react-komponentów biblioteki _Material Design for Bootstrap 4_,
 - joi-browser - walidacja wprowadzanych danych,
 - przyspieszenie renderowania strony przez użycie bibliotek react-window i react-virtualized-auto-sizer,
-- użycie Gulp do kompilowania stylów CSS z .scss,
+- użycie Gulp.js do kompilowania stylów CSS z .scss,
 - stosowanie plików .env dla środowisk development i production (inne bazy danych, inne adresy API node),
 - zastosowanie react-confirm-alert z własnymi stylami okienek,
 - dodatkowe biblioteki pomocnicze: babel-polyfill, axios, react-notifications, file-saver, jwt-decode, font-awesome.
@@ -38,13 +38,13 @@ Frontend:
 
 Backend:
 - autorska aplikacja napisana w Node.js / express,
-- stosowanie funkcji typu middleware do autentyfikacji użytkowników,
+- zasstosowanie funkcji typu middleware,
 - ukrywanie haseł użytkowników z użyciem biblioteki bcrypt,
-- bezpieczna i szybka autoryzacja użytkowników dzięki JSON Web Token,
+- bezpieczna i szybka autoryzacja użytkowników z wykorzystaniem JSON Web Token,
 - przechowywanie wrażliwych danych w zmiennych środowiskowych na serwerze, np. adres bazy danych,* \"salt"*,
 - @hapi/joi - walidacja otrzymanych danych od użytkowników,
 - baza danych - mongoDB, mongoose, modele i obsługa zapytań,
-- generowanie pliku PDF na podstawie obiektu .json z danymi wypełnionego testu - wykorzystanie własnego szablonu .hbr i biblioteki puppeteer,
+- generowanie pliku PDF z danych obiektu JSON - własny szablon .hbr + biblioteka puppeteer,
 - obsługa operacji CRUD przez interfejsy API wg zasobów, np. api/tests, api/users,
 - biblioteki pomocnicze: fs-extra, handlebars, nodemailer, helmet, compression, font-awesome, cors, puppeteer, mdbreact,
 - podział struktury kodu, tzn. osobno routes, models, middlewares, startup files,
@@ -104,5 +104,9 @@ Po wciśnięciu przycisku 'WYŚLIJ WYNIKI" lub upływie dozwolonego czasu wyniki
 ## UWAGI
 Jest to demonstracyjne repozytorium, tzn. posiada tylko część kodu.
 
+#### **Ciekawostka.**
+Projekt napisany z zastosowaniem polskiego nazewnictwa dla komponentów, funkcji czy zmiennych
+<br/>
+- w celu sprawdzenia jakie są wady i zalety takiego stylu.
 
 

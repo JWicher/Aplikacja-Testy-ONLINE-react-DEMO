@@ -16,6 +16,7 @@ Wersja demonstracyjna: [//jw-testy-online.herokuapp.com/](https://jw-testy-onlin
 - przyjemny interfejs, stosowanie efektów na elementy interaktywne,
 - możliwość udostępniania własnego testu innym osobom,
 - zapis szczegółów testu dla każdego kodu, zmiana nie wypływa na te już wygenerowane,
+- czas stopera testu przechowywany na serwerze,
 - wystarczy przesłać kod oraz adres aplikacji i czekać na wyniki.
 <br/>
 

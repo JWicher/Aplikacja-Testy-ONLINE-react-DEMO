@@ -106,7 +106,6 @@ Jest to demonstracyjne repozytorium, tzn. posiada tylko część kodu.
 
 #### **Ciekawostka.**
 Projekt napisany z zastosowaniem polskiego nazewnictwa dla komponentów, funkcji czy zmiennych
-<br/>
-- w celu sprawdzenia jakie są wady i zalety takiego stylu.
+w celu sprawdzenia jakie są wady i zalety takiego stylu.
 
 

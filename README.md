@@ -38,7 +38,7 @@ Frontend:
 
 Backend:
 - autorska aplikacja napisana w Node.js / express,
-- zasstosowanie funkcji typu middleware,
+- zastosowanie funkcji typu middleware,
 - ukrywanie haseł użytkowników z użyciem biblioteki bcrypt,
 - bezpieczna i szybka autoryzacja użytkowników z wykorzystaniem JSON Web Token,
 - przechowywanie wrażliwych danych w zmiennych środowiskowych na serwerze, np. adres bazy danych,* \"salt"*,

@@ -3,10 +3,16 @@ import { MDBBtn, MDBBadge } from "mdbreact";
 import kodTestuService from '../../../../services/kodTestuService';
 import Loader from '../../../współne/loader';
 import { NotificationManager } from 'react-notifications';
+import { zdobądźTekstyWersjiJęzykowej } from '../../../../services/wersjaJęzykowaService';
 
 class KodTestu extends Component {
-    state = { 
-        czekamNaOdpowiedźSerwera: false,
+    constructor(){
+        super();
+        this.state = { 
+            czekamNaOdpowiedźSerwera: false,
+        };
+
+        this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.kodyTestów.KodTestu");
     }
 
     ściągnijWynikiDoPlikuPDF = async () => {
@@ -16,7 +22,7 @@ class KodTestu extends Component {
             this.uruchomLoader(false);
         }
         catch(błąd){
-            NotificationManager.error("Nie udało się ściągnąć pliku")
+            NotificationManager.error(this.tekst.notyfikacje.ściągnijWyniki.niepowodzenie)
             this.uruchomLoader(false);
         }
     }
@@ -50,14 +56,14 @@ class KodTestu extends Component {
                                     </React.Fragment>
                             :
                                 <MDBBadge size="sm" color="danger" className="kura m-0 p-2">
-                                    Brak
+                                    {this.tekst.badgeWyniki.brakWyników}
                                 </MDBBadge>
                             }
                         </div>
                         <div className="panel-klienta__tresc_kody-testow_kod-usun">
                             <MDBBtn outline color="danger" size="sm" className="rounded m-0 px-2"
                                     onClick={ () => uruchomOstrzeżenieDlaKoduTestu(kod.kod) }
-                                    >Usuń
+                                    >{this.tekst.przycisk.usuń}
                             </MDBBtn>
                         </div>
                 </div>

@@ -16,13 +16,23 @@
     
     &__naglowek{
         height: 70px;
-        // &_przycisk-logowania{
-        //     width: 150px;
-        //     height: 100%;
-        //     display: flex;
-        //     justify-content: center;
-        // }
     }
+
+    &__wersja-jezykowa{
+        &_pojemnik{
+            width: 100px;
+            height: 40px;
+        }
+
+        &_flaga{
+            width: 40px;
+            height: 25px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    }
+
     &__weryfikacja-kodu{
         position: absolute;
         top: 50%;

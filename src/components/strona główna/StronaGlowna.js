@@ -5,13 +5,24 @@ import WeryfikacjaKodu from './WeryfikacjaKodu';
 import Stopka from './Stopka';
 import RejestracjaUzytkownika from './RejestracjaUżytkownika';
 import InformacjaPotwierdzenieKonta from './InformacjaPotwierdzenieKonta';
+import Flagi from './Flagi';
+import { ustawWersjęJęzykową } from '../../services/wersjaJęzykowaService';
 
 class StronaGlowna extends Component {
-    state = { 
-        wyświetlonyPrzycisk: "rejestruj"
-     }
+    constructor(){
+        super();
+        this.state = { 
+            wyświetlonyPrzycisk: "rejestruj",
+            wersjaJęzykowa: 'pl'
+        }
+    }
 
-     zamieńPrzycisk = (przycisk) => {
+    zmieńWersjęJęzykową = język => {
+        ustawWersjęJęzykową(język)
+        this.setState({wersjaJęzykowa: język})
+    }
+    
+    zamieńPrzycisk = (przycisk) => {
         this.setState({ wyświetlonyPrzycisk: przycisk })
     }
 
@@ -21,6 +32,7 @@ class StronaGlowna extends Component {
         return ( 
             <div className="strona-glowna d-flex flex-column">
                 <StronaGlownaNaglowek wyświetlonyPrzycisk={wyświetlonyPrzycisk} zamieńPrzycisk={this.zamieńPrzycisk}/>
+                <Flagi zmieńWersjęJęzykową={this.zmieńWersjęJęzykową}/>
                 <Switch>
                     <Route path="/rejestracja/:id" component={ (props) => <InformacjaPotwierdzenieKonta {...props} zamieńPrzycisk={this.zamieńPrzycisk} />} />
                     <Route path="/rejestracja" component={ (props) => <RejestracjaUzytkownika zamieńPrzycisk={this.zamieńPrzycisk} />} />

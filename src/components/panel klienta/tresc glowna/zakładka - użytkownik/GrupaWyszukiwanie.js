@@ -3,13 +3,22 @@ import { MDBBtn, MDBInput } from "mdbreact";
 import { NotificationManager } from 'react-notifications';
 import grupaService from '../../../../services/grupaService';
 import wspólneService from '../../../../services/wspólneService';
+import { zdobądźTekstyWersjiJęzykowej } from '../../../../services/wersjaJęzykowaService';
 
 class GrupaWyszukiwanie extends Component {
-    state = { 
-        znalezionaGrupa: {},
-        czekamNaOdpowiedźSerwera: false
+    constructor(){
+        super();
+        this.state = { 
+            znalezionaGrupa: {},
+            czekamNaOdpowiedźSerwera: false
+        }
+
+        this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.użytkownik.GrupaWyszukiwanie");
     }
 
+    wyczyśćInput = () => {
+        this.setState({znalezionaGrupa: {nazwa: ""}})
+    }
     wyszukiwarkaWprowadzanie = ({currentTarget: input}) => {
         this.setState({nazwaSzukanejGrupy: input.value});
     }
@@ -22,7 +31,7 @@ class GrupaWyszukiwanie extends Component {
         }
         catch(ex){
             this.setState({nazwaSzukanejGrupy: ""})
-            NotificationManager.error("Nie znaleziono takiej grupy w bazie danych");
+            NotificationManager.error(this.tekst.notyfikacja.błądNieznalezionoGrupy);
         }
         finally {
             this.uruchomLoader(false);
@@ -40,14 +49,14 @@ class GrupaWyszukiwanie extends Component {
             <React.Fragment>
                 { !znalezionaGrupa._id &&
                     <div>
-                        <p className="mb-2 font-weight-bold">Wyszukaj grupę po nazwie</p>
+                        <p className="mb-2 font-weight-bold">{this.tekst.blokNieznalezionoGrupy.tytuł}</p>
                         <div className="ml-3">
                             <MDBInput label="Nazwa grupy" autoComplete="off" value={nazwaSzukanejGrupy} containerClass="m-0 mb-1" autoFocus
                                         onChange={this.wyszukiwarkaWprowadzanie}
                                         onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.szukajFirmy) }
                                         />
                             <div>
-                                <MDBBtn className="ml-0" block color="info" size="sm" onClick={this.szukajFirmy} >Szukaj</ MDBBtn>
+                                <MDBBtn className="ml-0" block color="info" size="sm" onClick={this.szukajFirmy} >{this.tekst.przycisk.szukaj}</ MDBBtn>
                             </div>
                         </div>
                     </div>
@@ -55,16 +64,16 @@ class GrupaWyszukiwanie extends Component {
 
                 { znalezionaGrupa._id &&
                     <div>
-                        <p className="mb-2 font-weight-bold">Znaleizono grupę</p>
+                        <p className="mb-2 font-weight-bold">{this.tekst.tytuł}</p>
                         <div className="ml-3">
-                            <p className="mb-0"><span className="font-weight-bold mr-2">Nazwa:</span>{znalezionaGrupa.nazwa}</p>
-                            <p className="mb-0">Czy przypisać grupę do Twojego konta?</p>
+                            <p className="mb-0"><span className="font-weight-bold mr-2">`${this.tekst.nazwa}:`</span>{znalezionaGrupa.nazwa}</p>
+                            <p className="mb-0">{this.tekst.czyPrzypisać}</p>
                             <div className="mt-2 d-flex">
                                 <div className="ml-0 mr-2">
-                                    <MDBBtn color="danger" outline size="sm" onClick={ () => { this.wyczyśćInput(); this.props.niePrzypisujDoGrupy() } } >Nie</ MDBBtn>
+                                    <MDBBtn color="danger" outline size="sm" onClick={ () => { this.wyczyśćInput(); this.props.niePrzypisujDoGrupy() } } >{this.tekst.przycisk.zaprzeczenie}</ MDBBtn>
                                 </div>
                                 <div>
-                                    <MDBBtn color="success" outline size="sm" onClick={ () => this.props.przypiszDoGrupy(znalezionaGrupa)} >Tak</ MDBBtn>
+                                    <MDBBtn color="success" outline size="sm" onClick={ () => this.props.przypiszDoGrupy(znalezionaGrupa)} >{this.tekst.przycisk.potwierdzenie}</ MDBBtn>
                                 </div>
                             </div>
                         </div>

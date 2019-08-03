@@ -11,8 +11,10 @@ Wersja demonstracyjna: [//jw-testy-online.herokuapp.com/](https://jw-testy-onlin
 
 ### Zalety aplikacji:
 - wyniki testu dostępne w ciągu chwili od jego zakończeniu przez kandydata,
-- generowanie pliku PDF z wynikami tak, jakby kandydat wypełnił test papierowy,
+- generowanie pliku PDF tak, jakby kandydat wypełnił test papierowy,
 - działa na różnych przeglądarkach, w tym na IE,
+- automatyczne wysyłane wiadomości z rezultatem testu na wskazany adres email,
+- możliwość przełączania między wersjami językowymi aplikacji,
 - przyjemny interfejs, stosowanie efektów na elementy interaktywne,
 - możliwość udostępniania własnego testu innym osobom,
 - zapis szczegółów testu dla każdego kodu, zmiana nie wypływa na te już wygenerowane,
@@ -28,14 +30,15 @@ Wersja demonstracyjna: [//jw-testy-online.herokuapp.com/](https://jw-testy-onlin
 Frontend:
 - wymuszenie stosowania protokołu https (przekierowanie http -> https),
 - wykorzystanie standardu JWT do autoryzacji użytkownika,
-- wykorzystanie klas i react-komponentów biblioteki _Material Design for Bootstrap 4_,
+- użycie klas i komponentów biblioteki _Material Design for Bootstrap 4_,
+ -stworzenie struktury do łatwej implementacji nowych wersji językowych aplikacji,
 - joi-browser - walidacja wprowadzanych danych,
 - przyspieszenie renderowania strony przez użycie bibliotek react-window i react-virtualized-auto-sizer,
-- użycie Gulp.js do kompilowania stylów CSS z .scss,
+- użycie Gulp.js do kompilowania jednego pliku CSS z wielu .scss,
 - stworzenie komponentu blokująego dostęp do wskazanych ścieżek URL, gdy użytkownik nie ma uprawnień,
 - stosowanie plików .env dla środowisk development i production (inne bazy danych, inne adresy API node),
 - zastosowanie react-confirm-alert z własnymi stylami okienek,
-- dodatkowe biblioteki pomocnicze: babel-polyfill, axios, react-notifications, file-saver, jwt-decode, font-awesome.
+- użyte biblioteki pomocnicze: babel-polyfill, axios, react-notifications, file-saver, jwt-decode, font-awesome.
 <br/>
 
 Backend:
@@ -48,23 +51,25 @@ Backend:
 - baza danych - mongoDB, mongoose, modele i zapytania,
 - generowanie pliku PDF z danych obiektu JSON - własny szablon .hbr + biblioteka puppeteer,
 - obsługa operacji CRUD przez interfejsy API wg zasobów, np. api/tests, api/users,
-- biblioteki pomocnicze: fs-extra, handlebars, nodemailer, helmet, compression, font-awesome, cors, puppeteer, mdbreact,
+- dodatkowe biblioteki pomocnicze: fs-extra, nodemailer, helmet, compression, cors,
 - podział struktury kodu, tzn. osobno routes, models, middlewares, startup files,
 - demo kodu dostępne na osobnym repozytorium.
 <br/>
 
 ## OPIS I PREZENTACJA
+<br/>
+Struktura głowna aplikacji składa się z trzech głównych elementów:
+- strona logowania,
+- panel klienta,
+- test.
+
 ### **_1. Rejestracja._**
-Aby się zarejestrować należy podać imię i nazwisko lub nazwę, adres email i hasło dla tworzonego konta. Następnie aplikacja generuje i wysyła wiadomość na podany adres email z linkiem, którego uruchomienie powoduje zatwierdzenie konta.
+Aby się zarejestrować należy podać imię i nazwisko lub nazwę, adres email i hasło dla tworzonego konta. Następnie aplikacja generuje i wysyła wiadomość na podany adres email z linkiem, którego uruchomienie powoduje potwierdzenie konta.
 
 <img src="prezentacja/1_rejestracja_przysp_2x.gif" alt="rejestracja użytkownika">
 
 ### **_2. Tworzenie i modyfikacja testu._**
 Aplikacja umożliwia łatwe tworzenie i modyfikowanie testów.
-Layout: 
-- góra: nagłówek,
-- lewa strona: menu nawigacyjne po panelu klienta,
-- prawa strona: część robocza, wyświetlanie danych.
 
 #### **Dodawanie nowego testu.**
 Kliknięcie w zakładkę "TESTY" spowoduje wyświetlenie widoku prezentującego dostępne testy wraz z przyciskiem dodawania.

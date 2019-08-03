@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { MDBJumbotron, MDBContainer,MDBAlert } from "mdbreact";
 import OpcjaWyboru from './OpcjaWyboru';
+import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
 
 class Zadanie extends PureComponent {
   constructor(props){
@@ -38,9 +39,11 @@ class Zadanie extends PureComponent {
   }
   wygenerujZadanieZamknięte(zadanie){
     const { obecnieWybranaOpcja } = this.state;
+    const tekst = zdobądźTekstyWersjiJęzykowej("test.Zadanie");
+
     return (
       <MDBJumbotron className="p-3">
-              <p className="text-left">Zadanie nr {zadanie.numer} </p>
+              <p className="text-left">{`${tekst.etykietaZadanieNr} ${zadanie.numer}`} </p>
               <p className="lead"> {zadanie.tresc} </p>
               <hr className="my-0" />
               { zadanie.opcje_wyboru.map( opcja =>
@@ -58,16 +61,17 @@ class Zadanie extends PureComponent {
   wygenerujZadanieOtwarte(zadanie){
     const { odpowiedzi }= this.props;
     const index = odpowiedzi.findIndex( odp => odp.numerZadania === zadanie.numer);
+    const tekst = zdobądźTekstyWersjiJęzykowej("test.Zadanie");
 
     const trescOdpowiedzi = odpowiedzi[index].odpowiedz !== "" ? odpowiedzi[index].odpowiedz.tresc : "";
     return (
       <MDBJumbotron className="p-3">
-              <p className="text-ri">Zadanie nr {zadanie.numer} </p>
+              <p className="text-ri">{`${tekst.etykietaZadanieNr} ${zadanie.numer}`}</p>
               <h2 className="lead font-weight-bold"> {zadanie.tytul} </h2>
               <p className="lead"> {zadanie.tresc} </p>
               <hr className="my-0" />
               <div className="form-group shadow-textarea">
-                { this.state.probaKopiowania && <MDBAlert className="" color="danger">Wklejanie jest niedozwolone</MDBAlert> }
+                { this.state.probaKopiowania && <MDBAlert className="" color="danger">{tekst.informacjaPrzyPróbieWklejania}</MDBAlert> }
                 <textarea
                   className="form-control z-depth-1"
                   rows="10"

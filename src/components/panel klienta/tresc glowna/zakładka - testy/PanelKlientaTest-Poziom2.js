@@ -1,19 +1,21 @@
 import React from 'react';
 import { MDBBtn } from "mdbreact";
 import użytkownikService from '../../../../services/użytkownikService';
+import { zdobądźTekstyWersjiJęzykowej } from '../../../../services/wersjaJęzykowaService';
 
 const PanelKlientaTesPoziom2 = ({test, toggle }) => {
     
     const użytkownik = użytkownikService.getUserFromJWT();
     const użytkownikToAutor = użytkownik._id === test.zarejestrowal._id;
+    const tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.testy.PanelKlientaTestPoziom2");
 
     return ( 
         <header className="d-flex  align-items-start justify-content-between p-0 text-left">
             <div className="d-flex m-3">
                 <div className="text-right">
-                    <p className="m-0 font-weight-bold">Łączna ilość zadań: </p>
-                    <p className="m-0">- zamkniętych: </p>
-                    <p className="m-0">- otwartych: </p>
+                    <p className="m-0 font-weight-bold">{tekst.blokIlośćZadań.etykietaŁącznaIlosćZadań}</p>
+                    <p className="m-0">{tekst.blokIlośćZadań.etykietaZamkniętych}</p>
+                    <p className="m-0">{tekst.blokIlośćZadań.etykietaOtwartych}</p>
                 </div>
                 <div className="ml-1 text-left">
                     <p className="m-0 text-right font-weight-bold">{test.zadania.length}</p>
@@ -21,9 +23,9 @@ const PanelKlientaTesPoziom2 = ({test, toggle }) => {
                     <p className="m-0 text-right">{test.zadania.filter( z => z.typ === "otwarte").length}</p>
                 </div>
                 <div className="text-right ml-5">
-                    <p className="m-0 font-weight-bold">Zarządza testem: </p>
-                    <p className="m-0 font-weight-bold">Data rejestracji: </p>
-                    <p className="m-0 font-weight-bold">Data modyfikacji: </p>
+                    <p className="m-0 font-weight-bold">{tekst.blokZarządzanieTestem.etykietaZarządzaTestem}</p>
+                    <p className="m-0 font-weight-bold">{tekst.blokZarządzanieTestem.etykietaDataRejestracji}</p>
+                    <p className="m-0 font-weight-bold">{tekst.blokZarządzanieTestem.etykietaDataModyfikacji}</p>
                 </div>
                 <div className="ml-1 text-left">
                     <p className="m-0">{test.zarejestrowal.nazwa}</p>
@@ -33,9 +35,9 @@ const PanelKlientaTesPoziom2 = ({test, toggle }) => {
             </div>
  
             <div className="m-3 d-flex align-self-center">
-                <MDBBtn size="sm" color="elegant" outline onClick={toggle("1")} >Zadania</MDBBtn>
-                <MDBBtn size="sm" color="elegant" disabled={!użytkownikToAutor} outline onClick={toggle("2")} >Ustawienia testu</MDBBtn>
-                <MDBBtn size="sm" color="blue" disabled={test.zadania.length <= 0} onClick={toggle("3")} >Wygeneruj kod</MDBBtn>
+                <MDBBtn size="sm" color="elegant" outline onClick={toggle("1")} >{tekst.blokPrzycisków.etykietaZadania}</MDBBtn>
+                <MDBBtn size="sm" color="elegant" disabled={!użytkownikToAutor} outline onClick={toggle("2")} >{tekst.blokPrzycisków.etykietaUstawieniaTestu}</MDBBtn>
+                <MDBBtn size="sm" color="blue" disabled={test.zadania.length <= 0} onClick={toggle("3")} >{tekst.blokPrzycisków.etykietaWygenerujKod}</MDBBtn>
             </div>
             
         </header>

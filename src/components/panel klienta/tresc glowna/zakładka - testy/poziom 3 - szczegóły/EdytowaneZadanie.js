@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { MDBBtn } from "mdbreact";
 import { confirmAlert } from 'react-confirm-alert';
+import { zdobądźTekstyWersjiJęzykowej } from '../../../../../services/wersjaJęzykowaService';
 
 class EdytowaneZadanie extends Component {
-    state = {  }
+    constructor(){
+        super();
+        this.state = {};
+
+        this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.testy.poziom3_szczegóły.EdytowaneZadanie");
+    }
 
     wyrenderujZadanieZamknięte(){
         const { zadanie, onPrzechwyćZmianęTreści, onPrzechwyćZmianęTreściOpcji, onPrzechwyćZmianęPoprawnejOdpowiedzi } = this.props;
@@ -20,20 +26,22 @@ class EdytowaneZadanie extends Component {
 
                                 <span className="mr-2 font-weight-light">{opcja.id}</span>
                                 <input name={opcja.id}
+                                        autoComplete="off"
+                                        autoFocus
                                         onChange={onPrzechwyćZmianęTreściOpcji}
                                         value={opcja.tresc} type="text"
                                         className="form-control p-0 m-0" />
-                                <span onClick={ () => this.props.onUsuńOpcję(opcja) } className="badge badge-pill badge-danger ml-2 px-3 p-1 pb-0 m-0">Usuń</span>
+                                <span onClick={ () => this.props.onUsuńOpcję(opcja) } className="badge badge-pill badge-danger ml-2 px-3 p-1 pb-0 m-0">{this.tekst.usuńOpdcję}</span>
                             </div>
                         )}
 
                         {zadanie.opcje_wyboru.length < 10 &&
-                            <MDBBtn onClick={ () => this.props.onDodajOpcję(zadanie) } className="ml-4 mt-3" color="success" size="sm">Dodaj opcję</MDBBtn>
+                            <MDBBtn onClick={ () => this.props.onDodajOpcję(zadanie) } className="ml-4 mt-3" color="success" size="sm">{this.tekst.dodajOpcję}</MDBBtn>
                         }
                                     
                         {zadanie.opcje_wyboru.length > 0 &&
                                 <div className="d-flex align-items-center mt-3">
-                                    <span className="mr-2">Poprawna odpowiedź:</span>
+                                    <span className="mr-2">{this.tekst.poprawnaOdpowiedź}</span>
                                     <div>
                                         <select style={{cursor: "pointer"}} className="browser-default custom-select rgba_255_0_0_02 border-primary px-3"
                                                 defaultValue={ zadanie.poprawna_odpowiedz }
@@ -58,7 +66,12 @@ class EdytowaneZadanie extends Component {
         return (
                 <div className="d-flex md-form mr-2 m-0">
                     <div className="mr-2">{zadanie.numer + "."}</div>
-                    <textarea onChange={onPrzechwyćZmianęTreści} name="tresc" value={zadanie.tresc} className="md-textarea form-control pt-0" rows="7"></textarea>
+                    <textarea onChange={onPrzechwyćZmianęTreści}
+                              name="tresc"
+                              value={zadanie.tresc}
+                              className="md-textarea form-control pt-0"
+                              rows="7">
+                    </textarea>
                 </div>
         )
     }
@@ -68,13 +81,13 @@ class EdytowaneZadanie extends Component {
           customUI: ({ onClose }) => {
             return (
               <div className='react-confirm-alert__body'>
-                <h1>Ostrzeżenie</h1>
-                <p>Operacji nie będzie można cofnąć.</p>
-                <p className="mt-2 m-0">Czy napewno chcesz usunąć to zadanie?</p>
+                <h1>{this.tekst.confirmAlert.tytuł}</h1>
+                <p>{this.tekst.confirmAlert.treśćOstrzeżenia1}</p>
+                <p className="mt-2 m-0">{this.tekst.confirmAlert.treśćOstrzeżenia2}</p>
                 <p className="ml-3 mt-0 font-italic text-danger">{`- ${zadanie.numer}. ${zadanie.tresc.substring(0,25).padEnd(28, '...') }`}</p>
                 <div className="d-flex">
-                    <MDBBtn onClick={onClose} color="danger" size="sm">Odrzucam</MDBBtn>
-                    <MDBBtn onClick={() => {this.props.onUsuńZadanie(zadanie); onClose() }} color="success" size="sm">Potwierdzam</MDBBtn>
+                    <MDBBtn onClick={onClose} color="danger" size="sm">{this.tekst.confirmAlert.nie}</MDBBtn>
+                    <MDBBtn onClick={() => {this.props.onUsuńZadanie(zadanie); onClose() }} color="success" size="sm">{this.tekst.confirmAlert.tak}</MDBBtn>
                 </div>
               </div>
             );
@@ -89,11 +102,11 @@ class EdytowaneZadanie extends Component {
         return ( 
             <div className="col animated fadeIn faster pb-2">
                 <div className="d-flex justify-content-between align-items-center">
-                    <div className="d-flex align-items-center font-weight-bold text-danger">Tryb edycji</div>
+                    <div className="d-flex align-items-center font-weight-bold text-danger">{this.tekst.trybEdycji}</div>
                     <div>
-                        <MDBBtn onClick={ () => this.uruchomOstrzeżenieDlaZadania(zadanie) } color="danger" size="sm" outline className="mr-4">Usuń zadanie</MDBBtn>
-                        <MDBBtn onClick={onOdrzućZmiany} color="danger" size="sm">{ dokonanoZmian ? "Zamknij" : "Odrzuć zmiany" }</MDBBtn>
-                        <MDBBtn onClick={onZapiszZmianęZadania} disabled={dokonanoZmian} color="success" size="sm">Zapisz</MDBBtn>
+                        <MDBBtn onClick={ () => this.uruchomOstrzeżenieDlaZadania(zadanie) } color="danger" size="sm" outline className="mr-4">{this.tekst.usuńZadanie}</MDBBtn>
+                        <MDBBtn onClick={onOdrzućZmiany} color="danger" size="sm">{ dokonanoZmian ? this.tekst.zamknij : this.tekst.odrzućZmiany }</MDBBtn>
+                        <MDBBtn onClick={onZapiszZmianęZadania} disabled={dokonanoZmian} color="success" size="sm">{this.tekst.zapisz}</MDBBtn>
                     </div>
                 </div>
                 <hr className="mt-0" />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MDBBtn } from "mdbreact";
 import { zwróćListęAvatarów } from '../../../../../pliki do załadowania/avataryTestów';
+import { zdobądźTekstyWersjiJęzykowej } from '../../../../../services/wersjaJęzykowaService';
 
 class ZmienAvatar extends Component {
 
@@ -8,7 +9,9 @@ class ZmienAvatar extends Component {
         super()
         this.state = {
             avatar: props.aktualnieWybranyAvatar
-        }
+        };
+
+        this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.testy.poziom3_szczegóły.ZmienAvatar");
     }
 
 
@@ -26,7 +29,7 @@ class ZmienAvatar extends Component {
 
             return ( 
                 <div className="panel-klienta__tresc_test-modyfikuj-avatar d-flex flex-column align-items-center border border-primary p-2 animated fadeIn faster white">
-                    <p className="font-weight-bold text-center text-uppercase">Wybierz obraz reprezentujący test</p>
+                    <p className="font-weight-bold text-center text-uppercase">{this.tekst.tytuł}</p>
                     <div className="d-flex justify-content-center flex-wrap">
         
                         { listaAvatarów.map( avatar => 
@@ -43,7 +46,7 @@ class ZmienAvatar extends Component {
                     <hr /> 
         
                     <div>
-                        <MDBBtn color="primary" outline size="sm" onClick={ () =>{ this.props.onZmieńAvatar(this.state.avatar); this.props.onClose() } }>Zamknij</MDBBtn>
+                        <MDBBtn color="primary" outline size="sm" onClick={ () =>{ this.props.onZmieńAvatar(this.state.avatar); this.props.onClose() } }>{this.tekst.przyciskZamknij}</MDBBtn>
                     </div>
         
                 </div>

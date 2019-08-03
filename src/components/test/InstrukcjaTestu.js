@@ -4,6 +4,7 @@ import { MDBJumbotron, MDBInput } from "mdbreact";
 import { NotificationManager } from 'react-notifications';
 import Loader from '../współne/loader';
 import kodTestuService from '../../services/kodTestuService';
+import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
 
 class InstrukcjaTestu extends Component {
     constructor(){
@@ -15,11 +16,13 @@ class InstrukcjaTestu extends Component {
                 nazwisko: JSON.parse( localStorage.getItem("obiektKoduDostępu") ).kandydat.nazwisko
             },
             czekamNaOdpowiedźSerwera: false,
-        } 
+        };
+        this.tekst = zdobądźTekstyWersjiJęzykowej("test.InstrukcjaTestu");
     }
+
     schema = {
-        imie: Joi.string().required().error( () => {return { message: "Name can not be empty"};}),
-        nazwisko: Joi.string().required().error( () => {return { message: "Surname can not be empty"};})
+        imie: Joi.string().required().error( () => {return { message: this.tekst.błędy.imie };}),
+        nazwisko: Joi.string().required().error( () => {return { message: this.tekst.błędy.nazwisko };})
     };
 
 
@@ -99,18 +102,18 @@ class InstrukcjaTestu extends Component {
 
                         { test.instrukcja.length > 0 &&
                             <div className="test__instrukcja_info">
-                                <p className="mt-3 font-weight-bold">Note</p>
+                                <p className="mt-3 font-weight-bold">{this.tekst.podtytuły.informacja}</p>
                                 <p className="m-0">{test.instrukcja}</p> 
                                 <hr />
                             </div>
                         }
 
-                        <p className="mt-2 font-weight-bold">Please enter your name and surname</p>
-                        <MDBInput label="Name" autoComplete="off" name="imie"
+                        <p className="mt-2 font-weight-bold">{this.tekst.podtytuły.inputy}</p>
+                        <MDBInput label={this.tekst.inputy.imie} autoComplete="off" name="imie"
                                     disabled={ kandydat.imie.length } onChange={this.wprowadzanieDanychKandydata}
                                     value={this.state.kandydat.imie}
                         />
-                        <MDBInput label="Surname" autoComplete="off" name="nazwisko"
+                        <MDBInput label={this.tekst.inputy.nazwisko}  autoComplete="off" name="nazwisko"
                                     disabled={ kandydat.nazwisko.length } onChange={this.wprowadzanieDanychKandydata}
                                     value={this.state.kandydat.nazwisko}
                         />
@@ -118,7 +121,7 @@ class InstrukcjaTestu extends Component {
                         <div className="d-flex justify-content-center px-5">
                             { !czekamNaOdpowiedźSerwera ?
                                     <button className="btn btn-primary btn-block btn-lg" disabled={ this.czyPodałSwojeDane() } onClick={ this.sprawdźCzyKandydatPodałDane }>
-                                        { czasRozpoczęciaTestu ? "Test" : "Start" }
+                                        { czasRozpoczęciaTestu ? this.tekst.przycisk.etykietaGdyRozpoczętyTest : this.tekst.przycisk.etykietaGdyNierozpoczętyTest }
                                     </button>
                                     :
                                     <Loader opcje="logo-obrot" />

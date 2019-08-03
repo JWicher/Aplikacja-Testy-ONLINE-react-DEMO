@@ -4,10 +4,16 @@ import { MDBBtn } from "mdbreact";
 import { NotificationManager } from 'react-notifications';
 import testService from '../../../services/testService';
 import użytkownikService from '../../../services/użytkownikService';
+import { zdobądźTekstyWersjiJęzykowej } from '../../../services/wersjaJęzykowaService';
 
 class PanelKlientaTesty extends Component {
-    state = { 
-        testy: []
+    constructor(){
+        super();
+        this.state = { 
+            testy: []
+        };
+
+        this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.PanelKlientaTesty");
     };
   
     async componentDidMount() {
@@ -23,9 +29,10 @@ class PanelKlientaTesty extends Component {
     dodajTest = async () => {
         const użytkownik = użytkownikService.getUserFromJWT();
         const { testy } = this.state;
+
         const szkieletPustegoTestu = {
-            nazwa: "Nowy test - pusta formatka",
-            krotkiOpis: "Nowy test - krótki opis",
+            nazwa: this.tekst.dodajTest.nazwa,
+            krotkiOpis: this.tekst.dodajTest.krótkiOpis,
             zarejestrowal: {
                 nazwa: użytkownik.nazwa,
                 _id: użytkownik._id,
@@ -61,12 +68,12 @@ class PanelKlientaTesty extends Component {
             const testy = [...this.state.testy];
             const indeks = testy.findIndex( test => test._id === usuniętyTest._id )
             testy.splice(indeks, 1);
-            NotificationManager.success("Usunięto test");
+            NotificationManager.success(this.tekst.notyfikacje.usuwanie.sukces);
             this.setState({testy})
         }
         catch(błąd){
             if(błąd.response) {
-                NotificationManager.error("Próba usunięcia się nie powiodła");
+                NotificationManager.error(this.tekst.notyfikacje.usuwanie.niepowodzenie);
             }
         }
     }
@@ -87,11 +94,11 @@ class PanelKlientaTesty extends Component {
            testy[indeks] = zapisaneDaneTestu;
 
            this.setState({testy})
-           NotificationManager.success("Zapisano zmiany");
+           NotificationManager.success(this.tekst.notyfikacje.zapiszZmiany.sukces);
        }
        catch(błąd){
            if(błąd.response) {
-               NotificationManager.error(błąd.response.data);
+               NotificationManager.error(this.tekst.notyfikacje.zapiszZmiany.niepowodzenie);
            }
        }
    }
@@ -99,10 +106,10 @@ class PanelKlientaTesty extends Component {
   
     render() { 
         const { testy } = this.state;
-
+        console.log(testy.length, 't')
         return ( 
             <div>
-                <MDBBtn color="success" onClick={ this.dodajTest } >Dodaj test</MDBBtn>
+                <MDBBtn color="success" onClick={ this.dodajTest } >{this.tekst.przycisk.dodajTest}</MDBBtn>
                 <hr />
                 { testy.map( test => <PanelKlientaTest key={test._id} test={test} onUsuńTest={this.onUsuńTest} onZapiszZmiany={this.zapiszZmiany}/>)}
             </div>

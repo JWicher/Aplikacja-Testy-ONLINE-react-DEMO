@@ -6,6 +6,7 @@ import { NotificationManager } from 'react-notifications';
 import Loader from '../współne/loader';
 import użytkownikService from '../../services/użytkownikService';
 import wspólneService from '../../services/wspólneService';
+import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
 
 class RejestracjaUzytkownika extends Component {
     constructor(){
@@ -19,13 +20,14 @@ class RejestracjaUzytkownika extends Component {
                 hasloPowrorzenie: ''
             },
             wysłano: false
-        }
+        };
+        this.tekst = zdobądźTekstyWersjiJęzykowej("stronaGłówna.RejestracjaUżytkownika")
     }
     schema = {
-        nazwa: Joi.string().min(1).max(255).required().error( () => {return { message: "Nazwa jest wymagana"};}),
-        email: Joi.string().min(1).required().error( () => {return { message: "Nieprawidłowy e-mail"};}),
-        haslo: Joi.string().min(5).required().error( () => {return { message: "Za krótkie hasło"};}),
-        hasloPowrorzenie: Joi.string().min(5).required().error( () => {return { message: "Za krótkie powtórzone hasło"};})
+        nazwa: Joi.string().min(1).max(255).required().error( () => {return { message: this.tekst.błędy.nazwa };}),
+        email: Joi.string().min(1).required().error( () => {return { message: this.tekst.błędy.email };}),
+        haslo: Joi.string().min(5).required().error( () => {return { message: this.tekst.błędy.haslo };}),
+        hasloPowrorzenie: Joi.string().min(5).required().error( () => {return { message: this.tekst.błędy.hasloPowrorzenie };})
     };
 
     walidujDane(user){
@@ -42,7 +44,7 @@ class RejestracjaUzytkownika extends Component {
                 return;
             }
             if(użytkownik.haslo !== użytkownik.hasloPowrorzenie){
-                NotificationManager.error("Hasło i jego powtórzenie nie są równe");
+                NotificationManager.error(this.tekst.błędy.notyfikacjaHasloPowrorzenie);
                 return;
             }
 
@@ -74,19 +76,19 @@ class RejestracjaUzytkownika extends Component {
         return ( 
             <form className="strona-glowna__rejestracja-uzytkownika animated fadeIn faster" >
                { !wysłano && <div className="strona-glowna__rejestracja-uzytkownika_pojemnik">
-                    <h2 className="text-center text-uppercase font-weight-bold text-primary mb-4">Rejestracja</h2>
+                    <h2 className="text-center text-uppercase font-weight-bold text-primary mb-4">{this.tekst.tytuł}</h2>
                     
-                        <MDBInput label="Imię i nazwisko lub nazwa" name="nazwa" autoComplete="off"
+                        <MDBInput label={this.tekst.inputy.nazwa} name="nazwa" autoComplete="off"
                                     onChange={this.wprowadzanieDanychUżytkownika} onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
-                        <MDBInput label="Adres e-mail" name="email" autoComplete="off"
+                        <MDBInput label={this.tekst.inputy.email} name="email" autoComplete="off"
                                     onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
-                        <MDBInput label="Hasło" name="haslo" type="password" autoComplete="off"
+                        <MDBInput label={this.tekst.inputy.hasło} name="haslo" type="password" autoComplete="off"
                                     onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
-                        <MDBInput label="Powtórz hasło" name="hasloPowrorzenie" autoComplete="off" type="password"
+                        <MDBInput label={this.tekst.inputy.powtórzHasło} name="hasloPowrorzenie" autoComplete="off" type="password"
                                     onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
 
                         <div className="strona-glowna__rejestracja-uzytkownika_przycisk d-flex justify-content-center align-items-center">
-                            { !czekamNaOdpowiedźSerwera && <MDBBtn color="primary" onClick={this.zarejestrujNowegoUżytkownika}>Zarejestruj</MDBBtn> }
+                            { !czekamNaOdpowiedźSerwera && <MDBBtn color="primary" onClick={this.zarejestrujNowegoUżytkownika}>{this.tekst.przyciskZarejestruj}</MDBBtn> }
                             { czekamNaOdpowiedźSerwera && <Loader opcje="logo-obrot" /> }
                         </div>
                 </div>
@@ -99,7 +101,7 @@ class RejestracjaUzytkownika extends Component {
                         {`Aby dokończyć rejestrację, kliknij w link umieszczony w wiadomości wysłanej na adres: ${użytkownik.email}.`}
                             <Link to="/">
                                 <div className="d-flex justify-content-center mt-2">
-                                    <MDBBtn color="default" onClick={ () => zamieńPrzycisk("rejestruj")} >OK</MDBBtn>
+                                    <MDBBtn color="default" onClick={ () => zamieńPrzycisk("rejestruj")} >{this.tekst.przyciskPotwierdzenie}</MDBBtn>
                                 </div>
                             </Link>
                     </div>

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { MDBBtn } from "mdbreact";
-import użytkownikService from '../../services/użytkownikService';
 import { NotificationManager } from 'react-notifications';
+import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
+import użytkownikService from '../../services/użytkownikService';
 
 class InformacjaPotwierdzenieKonta extends Component {
     constructor(){
@@ -10,7 +11,6 @@ class InformacjaPotwierdzenieKonta extends Component {
         this.state = { 
             potwierdzonyProfil: false
          }
-
     }
 
     async componentDidMount() {
@@ -27,8 +27,9 @@ class InformacjaPotwierdzenieKonta extends Component {
 
     render() { 
         const { potwierdzonyProfil } = this.state;
-        const wiadomośćPotwierdzenie = <p>Konto zostało aktywowane. Możesz się teraz zalogować.</p>;
-        const wiadomośćNegacja = <p className='text-danger'>Konto nie zostało aktywowane. Wystąpił błąd.</p>;
+        const tekst = zdobądźTekstyWersjiJęzykowej("stronaGłówna.InformacjaPotwierdzenieKonta")
+        const wiadomośćPotwierdzenie = <p>{tekst.wiadomośćPotwierdzenie}</p>;
+        const wiadomośćNegacja = <p className='text-danger'>{tekst.wiadomośćNegacja}</p>;
 
         return ( 
             <div className="strona-glowna__rejestracja-uzytkownika animated fadeIn faster" >
@@ -38,7 +39,7 @@ class InformacjaPotwierdzenieKonta extends Component {
                      
                          <Link to="/">
                              <div className="d-flex justify-content-center mt-2">
-                                 <MDBBtn color="default" onClick={ () => this.props.zamieńPrzycisk("kod")} >OK</MDBBtn>
+                                 <MDBBtn color="default" onClick={ () => this.props.zamieńPrzycisk("kod")} >{tekst.przycisk}</MDBBtn>
                              </div>
                          </Link>
     

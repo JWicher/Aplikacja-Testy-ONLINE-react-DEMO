@@ -5,6 +5,7 @@ import { NotificationManager } from 'react-notifications';
 import Loader from '../współne/loader';
 import kodTestutService from '../../services/kodTestuService';
 import wspólneService from '../../services/wspólneService';
+import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
 
 class WeryfikacjaKodu extends Component {
     constructor(){
@@ -65,15 +66,17 @@ class WeryfikacjaKodu extends Component {
 
     render() { 
         const { czekamNaOdpowiedźSerwera } = this.state;
+        const tekst = zdobądźTekstyWersjiJęzykowej("stronaGłówna.WeryfikacjaKodu")
+
         return ( 
             <div className="strona-glowna__weryfikacja-kodu animated fadeIn faster" >
                 <div className="strona-glowna__weryfikacja-kodu_strefa-klienta border-primary rounded">
-                    <h2 className="text-center text-uppercase font-weight-bold text-primary mb-4">Rozpocznij test</h2>
-                    <p>Aby rozpocząć test należy wpisać kod dostepu otrzymany od rekrutera.</p>
+                    <h2 className="text-center text-uppercase font-weight-bold text-primary mb-4">{tekst.tytuł}</h2>
+                    <p>{tekst.opis}</p>
                     
                         <MDBInput label="Podaj kod" autoComplete="off" type="text" onChange={this.wprowadzanieKodu} onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zdobąćTest) }/>
                         <div className="strona-glowna__weryfikacja-kodu_przycisk d-flex justify-content-center align-items-center">
-                            { !czekamNaOdpowiedźSerwera && <MDBBtn color="primary" onClick={this.zdobąćTest}>Rozpocznij</MDBBtn> }
+                            { !czekamNaOdpowiedźSerwera && <MDBBtn color="primary" onClick={this.zdobąćTest}>{tekst.przyciskRozpocznij}</MDBBtn> }
                             { czekamNaOdpowiedźSerwera && <Loader opcje="logo-obrot" /> }
                         </div>
                 </div>

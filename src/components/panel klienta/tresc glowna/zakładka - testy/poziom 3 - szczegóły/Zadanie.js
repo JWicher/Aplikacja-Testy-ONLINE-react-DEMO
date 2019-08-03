@@ -3,6 +3,7 @@ import Joi from 'joi-browser';
 import { NotificationManager } from 'react-notifications';
 import OryginalneZadanie from './OryginalneZadanie';
 import EdytowaneZadanie from './EdytowaneZadanie';
+import { zdobądźTekstyWersjiJęzykowej } from '../../../../../services/wersjaJęzykowaService';
 
 class Zadanie extends Component {
     constructor(props){
@@ -12,21 +13,21 @@ class Zadanie extends Component {
             trybEdycji: false,
         }
         this.dostępneWartośćiId = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
-        
+        this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.testy.poziom3_szczegóły.Zadanie");
     }
 
     schemaZadanieOtwarte = Joi.object().keys({
-        tresc: Joi.string().min(1).error( () => {return { message: "Treść zadania nie może być pusta"};}),
+        tresc: Joi.string().min(1).error( () => {return { message: this.tekst.walidacjaInfoBłąd.treść };}),
     }).unknown(true);
 
     schemaZadanieZamknięte = Joi.object().keys({
-        tresc: Joi.string().min(1).error( () => {return { message: "Treść zadania nie może być pusta"};}),
+        tresc: Joi.string().min(1).error( () => {return { message: this.tekst.walidacjaInfoBłąd.treść };}),
         opcje_wyboru: Joi.array().min(1).required().items(
             Joi.object().keys({
                 id: Joi.string().required(),
-                tresc: Joi.string().required().error( () => {return { message: "Treść opcji wyboru nie może być pusta"};}
+                tresc: Joi.string().required().error( () => {return { message: this.tekst.walidacjaInfoBłąd.treść_opcja };}
             )}).unknown(true)
-        ).error( () => { return { message: "Musisz podać przynajmniej jedną opcję wyboru"} })
+        ).error( () => { return { message: this.tekst.walidacjaInfoBłąd.niePodanoOpcji } })
     }).unknown(true);
 
     walidujDane(zadanie){
@@ -96,7 +97,7 @@ class Zadanie extends Component {
         const zadanie = { ...this.state.zadanie };
         const nrNowejOpcji = zadanie.opcje_wyboru.length -1;
         const noweId = this.dostępneWartośćiId[ nrNowejOpcji + 1 ];
-        zadanie.opcje_wyboru = [...zadanie.opcje_wyboru, {id: noweId, tresc: "Nowa opcja" }]
+        zadanie.opcje_wyboru = [...zadanie.opcje_wyboru, {id: noweId, tresc: this.tekst.dodajOpcję.treść }]
         this.setState({zadanie})
     }
     usuńOpcję = async (usuwanaOpcja) => {

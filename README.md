@@ -57,8 +57,8 @@ Backend:
 <br/>
 
 ## OPIS I PREZENTACJA
-<br/>
 Struktura głowna aplikacji składa się z trzech głównych elementów:
+<br/>
 - strona logowania,
 - panel klienta,
 - test.

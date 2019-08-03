@@ -31,7 +31,7 @@ Frontend:
 - wymuszenie stosowania protokołu https (przekierowanie http -> https),
 - wykorzystanie standardu JWT do autoryzacji użytkownika,
 - użycie klas i komponentów biblioteki _Material Design for Bootstrap 4_,
- -stworzenie struktury do łatwej implementacji nowych wersji językowych aplikacji,
+- stworzenie struktury do łatwej implementacji nowych wersji językowych aplikacji,
 - joi-browser - walidacja wprowadzanych danych,
 - przyspieszenie renderowania strony przez użycie bibliotek react-window i react-virtualized-auto-sizer,
 - użycie Gulp.js do kompilowania jednego pliku CSS z wielu .scss,

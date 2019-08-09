@@ -7,6 +7,7 @@ import Loader from '../współne/loader';
 import użytkownikService from '../../services/użytkownikService';
 import wspólneService from '../../services/wspólneService';
 import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
+import { connect } from 'react-redux';
 
 class RejestracjaUzytkownika extends Component {
     constructor(){
@@ -72,20 +73,23 @@ class RejestracjaUzytkownika extends Component {
     render() { 
         const { czekamNaOdpowiedźSerwera, użytkownik, wysłano } = this.state;
         const { zamieńPrzycisk } = this.props;
+        const widokMenu = this.props.stanRedux.reducerStronaGłówna.widoczneMenu && window.innerWidth <= 991 ? "ukryj" : "";
 
         return ( 
-            <form className="strona-glowna__rejestracja-uzytkownika animated fadeIn faster" >
+            <form className={`strona-glowna__rejestracja-uzytkownika align-self-center align-self-lg-end mr-md-4 animated fadeIn faster ${widokMenu}` }>
                { !wysłano && <div className="strona-glowna__rejestracja-uzytkownika_pojemnik">
                     <h2 className="text-center text-uppercase font-weight-bold text-primary mb-4">{this.tekst.tytuł}</h2>
                     
-                        <MDBInput label={this.tekst.inputy.nazwa} name="nazwa" autoComplete="off"
-                                    onChange={this.wprowadzanieDanychUżytkownika} onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
-                        <MDBInput label={this.tekst.inputy.email} name="email" autoComplete="off"
-                                    onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
-                        <MDBInput label={this.tekst.inputy.hasło} name="haslo" type="password" autoComplete="off"
-                                    onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
-                        <MDBInput label={this.tekst.inputy.powtórzHasło} name="hasloPowrorzenie" autoComplete="off" type="password"
-                                    onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                        <div className="d-flex flex-column align-items-center">
+                            <MDBInput label={this.tekst.inputy.nazwa} name="nazwa" autoComplete="off"
+                                        onChange={this.wprowadzanieDanychUżytkownika} onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                            <MDBInput label={this.tekst.inputy.email} name="email" autoComplete="off"
+                                        onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                            <MDBInput label={this.tekst.inputy.hasło} name="haslo" type="password" autoComplete="off"
+                                        onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                            <MDBInput label={this.tekst.inputy.powtórzHasło} name="hasloPowrorzenie" autoComplete="off" type="password"
+                                        onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                        </div>
 
                         <div className="strona-glowna__rejestracja-uzytkownika_przycisk d-flex justify-content-center align-items-center">
                             { !czekamNaOdpowiedźSerwera && <MDBBtn color="primary" onClick={this.zarejestrujNowegoUżytkownika}>{this.tekst.przyciskZarejestruj}</MDBBtn> }
@@ -111,4 +115,13 @@ class RejestracjaUzytkownika extends Component {
     }
 }
  
-export default RejestracjaUzytkownika;
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+  };
+
+  
+  export default connect(
+      mapStateToProps
+    )(RejestracjaUzytkownika)
+    

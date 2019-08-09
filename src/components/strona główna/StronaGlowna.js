@@ -8,6 +8,9 @@ import InformacjaPotwierdzenieKonta from './InformacjaPotwierdzenieKonta';
 import Flagi from './Flagi';
 import { ustawWersjęJęzykową } from '../../services/wersjaJęzykowaService';
 
+import { connect } from 'react-redux';
+import { zmieńWidocznośćMenu } from '../../redux/actions/actionsStronaGłówna';
+
 class StronaGlowna extends Component {
     constructor(){
         super();
@@ -23,7 +26,9 @@ class StronaGlowna extends Component {
     }
     
     zamieńPrzycisk = (przycisk) => {
-        this.setState({ wyświetlonyPrzycisk: przycisk })
+        this.setState({ wyświetlonyPrzycisk: przycisk }) ;
+        if (window.innerWidth <= 991)
+            this.props.zmienWidocznoscMenu()
     }
 
     render() { 
@@ -43,6 +48,23 @@ class StronaGlowna extends Component {
                 
          );
     }
-}
  
-export default StronaGlowna;
+}
+
+  const mapStateToProps = (state) => {
+        return { stanRedux: state };
+  };
+
+  const mapDispatchToProps = (dispatch) => {
+    return {
+      zmienWidocznoscMenu: () => dispatch( zmieńWidocznośćMenu() ),
+    }
+  };
+  
+
+  
+  export default connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(StronaGlowna)
+    

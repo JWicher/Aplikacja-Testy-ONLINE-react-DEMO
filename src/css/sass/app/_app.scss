@@ -3,13 +3,20 @@
 }
 
 html, body {
-    height: 100vh;
     max-height: 100vh;
+    min-height: 100vh;
+    max-width: 100vw;
+    min-width: 100vw;
     padding: 0px;
     margin: 0;
+
 }
 .App {
+
+  max-height: 100vh;
   min-height: 100vh;
+  max-width: 100vw;
+  min-width: 100vw;
 }
 
 *::-webkit{
@@ -25,17 +32,6 @@ html, body {
   }
 }
 
-/*
- scrollbar-base-color: #000;
-  scrollbar-face-color: #000;
-  scrollbar-3dlight-color: #000;
-  scrollbar-highlight-color: #000;
-  scrollbar-track-color: #000;
-  scrollbar-arrow-color: black;
-  scrollbar-shadow-color: #000;
-  scrollbar-dark-shadow-color: #000;
-
-  */
 
 .kura{
     border-radius: 10rem

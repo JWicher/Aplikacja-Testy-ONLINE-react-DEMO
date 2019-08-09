@@ -1,0 +1,7 @@
+export const WIDOCZNE_MENU = 'WIDOCZNE_MENU';
+export const USTAW_WIDOCZNOŚĆ_MENU = 'USTAW_WIDOCZNOŚĆ_MENU';
+
+export default {
+    WIDOCZNE_MENU,
+    USTAW_WIDOCZNOŚĆ_MENU
+}

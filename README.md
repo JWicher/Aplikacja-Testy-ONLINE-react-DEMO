@@ -29,7 +29,9 @@ Wersja demonstracyjna: [//jw-testy-online.herokuapp.com/](https://jw-testy-onlin
 
 Frontend:
 - wymuszenie stosowania protokołu https (przekierowanie http -> https),
+- współdzielenie danych między odległymi komponentami z zastosowaniem Redux,
 - wykorzystanie standardu JWT do autoryzacji użytkownika,
+- responsywność aplikacji (Bootstrap i media queries) - w trakcie...,
 - użycie klas i komponentów biblioteki _Material Design for Bootstrap 4_,
 - stworzenie struktury do łatwej implementacji nowych wersji językowych aplikacji,
 - joi-browser - walidacja wprowadzanych danych,

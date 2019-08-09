@@ -1,0 +1,72 @@
+@media all and (max-height: $sm) {
+
+    .strona-glowna__rejestracja-uzytkownika{
+        padding: 15px 0px;
+        width: 85%;
+
+        &_pojemnik{
+            & > h2 {
+                margin-bottom: 15px !important;
+                font-size: 24px;
+            }
+
+            > div {
+                flex-direction: row !important;
+                flex-wrap: wrap;
+                justify-content: center;
+
+                > .md-form {
+                    margin-left: 2%;
+                    width: 45%;
+                    margin-bottom: 0px;
+                    margin-top: 0px;
+
+                    & > input {
+                        // padding: 5px;
+                        // margin-bottom: 5px;
+                    }
+
+                    & > * {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        &_przycisk{
+            & > button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    }
+}
+
+@media all and (max-width: $sm) {
+    .strona-glowna__rejestracja-uzytkownika{
+
+        &_pojemnik{
+            padding: 0px;
+            
+            & > div {
+                flex-wrap: wrap;
+
+                > .md-form {
+                    margin-bottom: 0px;
+                    margin-top: 0px;
+                    width: 100%;
+
+                    & > label {
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        &_przycisk{
+            
+        }
+    }
+}
+
+

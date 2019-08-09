@@ -12,10 +12,61 @@
         background-image: url('css/images/tlo2.jpg');
         background-size: cover;
         background-repeat: no-repeat;
+        background-position: center;
     }
     
     &__naglowek{
-        height: 70px;
+        &_logo{
+            white-space: nowrap;
+            padding-right: 10px;
+        }
+
+        &_nawigacja {
+            flex: 1;
+            padding-left: 30px;;
+
+            &-ikonka{
+                min-width: 30px;
+                text-align: center;
+            }
+
+            &-logowanie {
+                width: 100%;
+                justify-content: flex-end;
+
+                &-inputy{
+                    max-width: 600px;
+                    flex: 3;
+                    & > div {
+                        width: 100%;
+                    }
+                }
+
+                &-przycisk{
+                    flex: 2;
+                    max-width: 300px;
+                    display: flex;
+                    justify-content: space-between;
+
+                    & > div {
+                        width: 49%;
+                        max-width: 50%;
+                        & > a {
+                            width: 100%;
+                            max-width: 100%;
+                        }
+                        & button {
+                            width: 100%;
+                            max-width: 100%;
+                            padding-left: 0 !important;
+                            padding-right: 0 !important;
+                            margin: 0!important;
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
     &__wersja-jezykowa{
@@ -34,17 +85,12 @@
     }
 
     &__weryfikacja-kodu{
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translate(0,-50%);
-        margin-right: 50px;
+        max-width: 85%;
+
         &_strefa-klienta{
-            height: 400px;
             background: rgba(255,255,255,0.9);
             border: 3px solid #0d47a1;
             padding: 20px;
-            width: 400px;
         }
         &_przycisk {
             height: 50px;
@@ -52,18 +98,31 @@
     }
 
     &__rejestracja-uzytkownika{
+        max-width: 85%;
+        width: 400px;
         background: rgba(255,255,255,0.9);
         border: 3px solid #0d47a1;
         padding: 20px;
-        min-width: 30vw;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
 
         &_informacja{
             width: 40vw;
         }
+
+        &_pojemnik{
+            > div {
+                > .md-form {
+                    margin-left: 2%;
+                    width: 100%;
+                    margin-bottom: 0px;
+                    margin-top: 10px;
+
+                    & > * {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
     }
 
     &__stopka{
@@ -71,5 +130,6 @@
         bottom: 0;
         width: 100vw;
         height: 70px;
+        z-index: -1
     }
 }

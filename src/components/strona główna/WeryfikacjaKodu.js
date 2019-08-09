@@ -6,6 +6,7 @@ import Loader from '../współne/loader';
 import kodTestutService from '../../services/kodTestuService';
 import wspólneService from '../../services/wspólneService';
 import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
+import { connect } from 'react-redux';
 
 class WeryfikacjaKodu extends Component {
     constructor(){
@@ -67,11 +68,12 @@ class WeryfikacjaKodu extends Component {
     render() { 
         const { czekamNaOdpowiedźSerwera } = this.state;
         const tekst = zdobądźTekstyWersjiJęzykowej("stronaGłówna.WeryfikacjaKodu")
+        const widokMenu = this.props.stanRedux.reducerStronaGłówna.widoczneMenu && window.innerWidth <= 991 ? "ukryj" : "";
 
         return ( 
-            <div className="strona-glowna__weryfikacja-kodu animated fadeIn faster" >
+            <div className={ `strona-glowna__weryfikacja-kodu align-self-center align-self-lg-end mr-md-4 animated fadeIn faster ${widokMenu}` }>
                 <div className="strona-glowna__weryfikacja-kodu_strefa-klienta border-primary rounded">
-                    <h2 className="text-center text-uppercase font-weight-bold text-primary mb-4">{tekst.tytuł}</h2>
+                    <h2 className="text-center text-uppercase font-weight-bold text-primary mb-1 mb-sm-4">{tekst.tytuł}</h2>
                     <p>{tekst.opis}</p>
                     
                         <MDBInput label="Podaj kod" autoComplete="off" type="text" onChange={this.wprowadzanieKodu} onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zdobąćTest) }/>
@@ -85,4 +87,13 @@ class WeryfikacjaKodu extends Component {
     }
 }
  
-export default WeryfikacjaKodu;
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+  };
+
+  
+  export default connect(
+      mapStateToProps
+    )(WeryfikacjaKodu)
+    

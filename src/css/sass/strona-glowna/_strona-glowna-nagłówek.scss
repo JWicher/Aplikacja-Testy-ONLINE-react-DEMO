@@ -1,0 +1,100 @@
+@media all and (max-width: $lg) {
+
+    .strona-glowna__naglowek{
+        &_logo{
+            width: 100%;
+            padding-bottom: 10px;
+            border-bottom: 1px grey solid;
+        }
+
+        &_nawigacja{
+            width: 100%;
+            padding-left: 10px;
+            padding-right: 10px;
+            
+            &-logowanie {
+                justify-content: stretch;
+
+                &-inputy{
+                    max-width: 100%;
+                    margin-top: 10px;
+                    flex: 2;
+                }
+
+                &-przycisk{
+                    flex: 1;
+                }
+            }
+
+            &-ikonka{
+                width: 100%;
+                padding-top: 10px;
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        }
+            
+    }
+}
+
+
+@media all and (max-width: $sm) {
+
+    .strona-glowna__naglowek{
+
+        &_nawigacja{
+            width: 100%;
+            padding: 0px;
+
+            &-logowanie {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+
+                &-inputy{
+                    width: 100%;
+                    
+                    & > div {
+                        width: 100%;
+                    }
+                }
+
+                &-przycisk{
+                    width: 100%;
+                    max-width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+
+                    & > div {
+                        width: 49%;
+                        max-width: 50%;
+
+                        & button {
+                            width: 100%;
+                            max-width: 100%;
+                            padding-left: 0;
+                            padding-right: 0;
+                            margin: 0px!important;
+                        }
+                    }
+                }
+            }
+
+        }
+            
+    }
+}
+
+@media all and (max-height: $xs) {
+
+    .strona-glowna__naglowek{
+
+        &_nawigacja-logowanie-przycisk > div button {
+            white-space: nowrap;
+            height: 100%;
+            max-height: 100%;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+    }
+}

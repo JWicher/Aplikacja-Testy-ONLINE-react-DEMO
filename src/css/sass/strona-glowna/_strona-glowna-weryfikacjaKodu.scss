@@ -1,0 +1,34 @@
+@media all and (max-height: $sm) {
+
+    .strona-glowna__weryfikacja-kodu{
+        font-size: 14px;
+        
+        &_strefa-klienta{
+            padding: 10px;
+
+            & > h2 {
+                font-size: 24px;
+            }
+
+            & > p {
+                margin-bottom: 0px;
+            }
+
+            & > div {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+
+            & > div > label, & > div > input {
+                font-size: 14px !important;
+            }
+
+        }
+
+        &_przycisk, &_przycisk > button{
+            margin: 0px !important;
+        }
+    }
+}
+
+

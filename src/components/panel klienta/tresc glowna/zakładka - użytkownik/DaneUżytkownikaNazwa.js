@@ -5,20 +5,30 @@ import { MDBBtn } from "mdbreact";
 import BlokInputu from './BlokInputu';
 import wspólneService from '../../../../services/wspólneService';
 import { zdobądźTekstyWersjiJęzykowej } from '../../../../services/wersjaJęzykowaService';
+import { ustawEdytowanyElement } from '../../../../redux/actions/actionsPanelKlienta';
+import { connect } from 'react-redux';
 
 class DaneUzytkownikaNazwa extends Component {
     constructor(props){
         super(props)
         this.state = { 
             użytkownik: props.użytkownik,
-            trybEdycji: false
+            trybEdycji: false,
+            tekst: zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.użytkownik.DaneUzytkownikaNazwa")
          };
 
-         this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.użytkownik.DaneUzytkownikaNazwa");
     }
+        
     schema = Joi.object().keys({
-        nazwa: Joi.string().min(1).required().error( () => {return { message: this.tekst.notyfikacja.błądNazwa };}),
+        nazwa: Joi.string().min(1).required().error( () => {return { message: this.state.tekst.notyfikacja.błądNazwa };}),
     }).unknown(true);
+
+    static getDerivedStateFromProps(nextProps,prevProps) {
+        if( nextProps !==  prevProps )
+        return {
+            tekst: zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.użytkownik.DaneUzytkownikaNazwa")
+        }
+      }
 
     zapiszZmianęDanych = async() => {
         const { użytkownik } = this.state;
@@ -28,12 +38,13 @@ class DaneUzytkownikaNazwa extends Component {
             return null;
         }
         this.props.onWyślijAktualizacjęUżytkownika(użytkownik);
-        this.przełączTrybEdycji();
+        this.props.ustawEdytowanyElement("");
     }
+
     odrzućZmiany = () => {
         const użytkownik = { ...this.props.użytkownik };
 
-        this.przełączTrybEdycji();
+        this.props.ustawEdytowanyElement("");
         this.setState({użytkownik})
     }
 
@@ -43,37 +54,41 @@ class DaneUzytkownikaNazwa extends Component {
         this.setState({użytkownik});
     }
     
-    przełączTrybEdycji = () => {
-        this.setState({trybEdycji: !this.state.trybEdycji})
-    }
+ 
     walidujDane(użytkownik){
         const { error } = Joi.validate(użytkownik, this.schema);
         return error ? error.details[0].message : null;
     };
+
     render(){
-        const {użytkownik, trybEdycji} = this.state;
+        const {użytkownik, tekst} = this.state;
+        const { edytowanyElement } = this.props.stanRedux.reducerPanelKlienta;
 
         return ( 
             <div>
-                { !trybEdycji && 
+                { edytowanyElement === "" && 
                     <div>
-                        <p className="mb-0 font-weight-bold">{this.tekst.imieInazwisko}</p>
+                        <p className="mb-0 font-weight-bold">{tekst.imieInazwisko}</p>
                         <div className="d-flex">
                             <p className="ml-2 mr-4">{użytkownik.nazwa }</p>
-                            <i className="fas fa-edit " style={{cursor:"pointer"}} onClick={this.przełączTrybEdycji}></i>
+                            <i className="fas fa-edit "
+                                style={{cursor:"pointer"}}
+                                onClick={ () => this.props.ustawEdytowanyElement("ustawienia-nazwa") }>
+                            </i>
                         </div>
                     </div>
                 }
-                { trybEdycji && 
+
+                { edytowanyElement === "ustawienia-nazwa" && 
                     <div className="md-form border border-danger p-2 animated fadeIn faster">
-                        <p className="font-weight-bold text-danger">{this.tekst.trybEdycji}</p>
-                        <BlokInputu etykieta={this.tekst.imieInazwisko} name="nazwa" value={użytkownik.nazwa}
+                        <p className="font-weight-bold text-danger">{tekst.trybEdycji}</p>
+                        <BlokInputu etykieta={tekst.imieInazwisko} name="nazwa" value={użytkownik.nazwa}
                                     onChange={this.przechwyćZmianęTreści}
                                     onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zapiszZmianęDanych) }
                                     />
                         <div className="mt-2">
-                            <MDBBtn className="" color="danger" size="sm" onClick={this.odrzućZmiany} >{this.tekst.przycisk.zamknij}</ MDBBtn>
-                            <MDBBtn className="" color="success" size="sm" onClick={this.zapiszZmianęDanych} >{this.tekst.przycisk.zapisz}</ MDBBtn>
+                            <MDBBtn className="" color="danger" size="sm" onClick={this.odrzućZmiany} >{tekst.przycisk.zamknij}</ MDBBtn>
+                            <MDBBtn className="" color="success" size="sm" onClick={this.zapiszZmianęDanych} >{tekst.przycisk.zapisz}</ MDBBtn>
                         </div>
                     </div>
                 }
@@ -81,4 +96,19 @@ class DaneUzytkownikaNazwa extends Component {
         );
     }
 }
-export default DaneUzytkownikaNazwa;
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+  };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    ustawEdytowanyElement: edytowanyElement => dispatch( ustawEdytowanyElement(edytowanyElement) ),
+    }
+};
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DaneUzytkownikaNazwa)
+

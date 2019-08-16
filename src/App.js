@@ -5,18 +5,18 @@ import StronaGlowna from './components/strona główna/StronaGlowna';
 import TestWezel from './components/test/TestWezel';
 import PanelKlienta from './components/panel klienta/PanelKlienta';
 import {NotificationContainer} from 'react-notifications';
-
 import httpService from "./services/httpService";
+import { connect } from 'react-redux';
 
 class App extends Component {
-  constructor(props){
-      super(props)
+  constructor(){
+      super()
       this.state = {}
       document.title = "JW TESTY ONLINE"
   }
 
   async componentDidMount() {
-    const ping = await httpService.get()
+    await httpService.get()
   }
   
   render() { 
@@ -33,4 +33,11 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return { stanRedux: state };
+};
+
+export default connect(
+  mapStateToProps
+)(App)
+

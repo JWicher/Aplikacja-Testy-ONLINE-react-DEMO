@@ -15,9 +15,21 @@ class EdytowaneZadanie extends Component {
         const { zadanie, onPrzechwyćZmianęTreści, onPrzechwyćZmianęTreściOpcji, onPrzechwyćZmianęPoprawnejOdpowiedzi } = this.props;
             return (
                 <React.Fragment>
-                    <div className="d-flex md-form m-0 ">
+                    <div className="d-flex md-form m-0">
                         <div className="mr-2">{zadanie.numer + "."}</div>
-                        <input onChange={onPrzechwyćZmianęTreści} name="tresc" value={zadanie.tresc} type="text" className="form-control p-0 m-0" />
+
+                                  <textarea 
+                                        name="tresc"
+                                        value={zadanie.tresc}
+                                        autoComplete="off"
+                                        autoFocus
+                                        onChange={onPrzechwyćZmianęTreści}
+                                        className="md-textarea form-control pt-0 jw-overflow-y"
+                                        rows="1"
+                                        resize="both"
+                                        >
+                                </textarea>
+                                
                     </div>
                     <div className="md-form mr-2 m-0">
 
@@ -25,6 +37,7 @@ class EdytowaneZadanie extends Component {
                             <div key={opcja.id} className="d-flex ml-4 m-0 align-items-center md-form mr-2 m-0 p-0">
 
                                 <span className="mr-2 font-weight-light">{opcja.id}</span>
+                              
                                 <input name={opcja.id}
                                         autoComplete="off"
                                         autoFocus

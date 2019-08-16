@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { zmieńWersjęJęzykową } from '../../redux/actions/actionsWersjaJęzykowa';
 
 const Flagi = (props) => {
 
@@ -24,6 +25,13 @@ const mapStateToProps = (state) => {
      return { stanRedux: state };
    };
    
+const mapDispatchToProps = (dispatch) => {
+    return {
+      zmieńWersjęJęzykową: język => dispatch( zmieńWersjęJęzykową(język) ),
+    }
+};
+
 export default connect(
-     mapStateToProps
+     mapStateToProps,
+     mapDispatchToProps
 )(Flagi)

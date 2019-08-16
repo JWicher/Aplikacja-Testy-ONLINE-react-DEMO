@@ -19,5 +19,5 @@ const Stopka = () => {
         </div>
      );
 }
- 
-export default Stopka;
+
+export default Stopka

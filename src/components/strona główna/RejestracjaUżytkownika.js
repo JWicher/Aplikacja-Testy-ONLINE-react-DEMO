@@ -8,10 +8,11 @@ import użytkownikService from '../../services/użytkownikService';
 import wspólneService from '../../services/wspólneService';
 import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
 import { connect } from 'react-redux';
+import { zamieńPrzycisk } from '../../redux/actions/actionsStronaGłówna';
 
 class RejestracjaUzytkownika extends Component {
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state = { 
             czekamNaOdpowiedźSerwera: false,
             użytkownik: {
@@ -22,14 +23,17 @@ class RejestracjaUzytkownika extends Component {
             },
             wysłano: false
         };
+
         this.tekst = zdobądźTekstyWersjiJęzykowej("stronaGłówna.RejestracjaUżytkownika")
+        this.schema = {
+            nazwa: Joi.string().min(1).max(255).required().error( () => {return { message: this.tekst.błędy.nazwa };}),
+            email: Joi.string().min(1).required().error( () => {return { message: this.tekst.błędy.email };}),
+            haslo: Joi.string().min(5).required().error( () => {return { message: this.tekst.błędy.haslo };}),
+            hasloPowrorzenie: Joi.string().min(5).required().error( () => {return { message: this.tekst.błędy.hasloPowrorzenie };})
+        };
+
     }
-    schema = {
-        nazwa: Joi.string().min(1).max(255).required().error( () => {return { message: this.tekst.błędy.nazwa };}),
-        email: Joi.string().min(1).required().error( () => {return { message: this.tekst.błędy.email };}),
-        haslo: Joi.string().min(5).required().error( () => {return { message: this.tekst.błędy.haslo };}),
-        hasloPowrorzenie: Joi.string().min(5).required().error( () => {return { message: this.tekst.błędy.hasloPowrorzenie };})
-    };
+    
 
     walidujDane(user){
         const { error } = Joi.validate(user, this.schema);
@@ -40,6 +44,7 @@ class RejestracjaUzytkownika extends Component {
         try{
             const { użytkownik } = this.state;
             const błąd = this.walidujDane(użytkownik, this.schema);
+
             if(błąd){
                 NotificationManager.error(błąd);
                 return;
@@ -65,15 +70,14 @@ class RejestracjaUzytkownika extends Component {
         this.setState({ użytkownik })
     }
 
-
     uruchomLoader(mode){
         this.setState({ czekamNaOdpowiedźSerwera: mode })
     };
 
     render() { 
         const { czekamNaOdpowiedźSerwera, użytkownik, wysłano } = this.state;
-        const { zamieńPrzycisk } = this.props;
-        const widokMenu = this.props.stanRedux.reducerStronaGłówna.widoczneMenu && window.innerWidth <= 991 ? "ukryj" : "";
+
+        const widokMenu = window.store.getState().reducerStronaGłówna.widoczneMenu && window.innerWidth <= 991 ? "ukryj" : "";
 
         return ( 
             <form className={`strona-glowna__rejestracja-uzytkownika align-self-center align-self-lg-end mr-md-4 animated fadeIn faster ${widokMenu}` }>
@@ -82,13 +86,17 @@ class RejestracjaUzytkownika extends Component {
                     
                         <div className="d-flex flex-column align-items-center">
                             <MDBInput label={this.tekst.inputy.nazwa} name="nazwa" autoComplete="off"
-                                        onChange={this.wprowadzanieDanychUżytkownika} onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                                        onChange={this.wprowadzanieDanychUżytkownika} 
+                                        onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
                             <MDBInput label={this.tekst.inputy.email} name="email" autoComplete="off"
-                                        onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                                        onChange={this.wprowadzanieDanychUżytkownika}  
+                                        onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
                             <MDBInput label={this.tekst.inputy.hasło} name="haslo" type="password" autoComplete="off"
-                                        onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                                        onChange={this.wprowadzanieDanychUżytkownika}  
+                                        onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
                             <MDBInput label={this.tekst.inputy.powtórzHasło} name="hasloPowrorzenie" autoComplete="off" type="password"
-                                        onChange={this.wprowadzanieDanychUżytkownika}  onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
+                                        onChange={this.wprowadzanieDanychUżytkownika}  
+                                        onKeyPress={ (target) => wspólneService.enterUruchamiaFunkcję(target, this.zarejestrujNowegoUżytkownika) } />
                         </div>
 
                         <div className="strona-glowna__rejestracja-uzytkownika_przycisk d-flex justify-content-center align-items-center">
@@ -105,7 +113,7 @@ class RejestracjaUzytkownika extends Component {
                         {`Aby dokończyć rejestrację, kliknij w link umieszczony w wiadomości wysłanej na adres: ${użytkownik.email}.`}
                             <Link to="/">
                                 <div className="d-flex justify-content-center mt-2">
-                                    <MDBBtn color="default" onClick={ () => zamieńPrzycisk("rejestruj")} >{this.tekst.przyciskPotwierdzenie}</MDBBtn>
+                                    <MDBBtn onClick={ () => this.props.zamieńPrzycisk("rejestruj")} >{this.tekst.przyciskPotwierdzenie}</MDBBtn>
                                 </div>
                             </Link>
                     </div>
@@ -120,8 +128,15 @@ const mapStateToProps = (state) => {
     return { stanRedux: state };
   };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+    zamieńPrzycisk: przycisk => dispatch( zamieńPrzycisk(przycisk) ),
+    }
+};
   
-  export default connect(
-      mapStateToProps
-    )(RejestracjaUzytkownika)
-    
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(RejestracjaUzytkownika)
+
+

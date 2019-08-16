@@ -1,6 +1,5 @@
 import { get } from "lodash";
 
-
 const tekstyWersjiJęzykowych = {
 
     pl: {
@@ -280,7 +279,7 @@ const tekstyWersjiJęzykowych = {
                                 etykietaPoprawnaOdpowiedź: "Poprawna odpowiedź:"
                             },
                             ZadaniaTestu: {
-                                tytuł: "Treść zadań",
+                                tytuł: "ZADANIA",
                                 brakPrzypisanychZadań: "Brak przypisanych zadań.",
                                 wybierzTypZadania: "Wybierz typ zadania",
                                 przycisk: {
@@ -681,7 +680,7 @@ const tekstyWersjiJęzykowych = {
                                 etykietaPoprawnaOdpowiedź: "Correct answer:"
                             },
                             ZadaniaTestu: {
-                                tytuł: "Content of tasks",
+                                tytuł: "TASKS",
                                 brakPrzypisanychZadań: "Brak przypisanych zadań.",
                                 wybierzTypZadania: "There are no assigned tasks",
                                 przycisk: {
@@ -808,15 +807,11 @@ const tekstyWersjiJęzykowych = {
 
 
 export function zdobądźTekstyWersjiJęzykowej(ścieżka){
-    const wersjaJęzykowa = localStorage.getItem('wersjaJęzykowa') ? localStorage.getItem('wersjaJęzykowa') : "en";
-    return get(tekstyWersjiJęzykowych[wersjaJęzykowa], ścieżka); 
-}
+    const { wersjaJęzykowa }  = window.store.getState().reducerWersjaJęzkowa;
 
-export function ustawWersjęJęzykową(język){
-    localStorage.setItem("wersjaJęzykowa", język)
+    return get(tekstyWersjiJęzykowych[wersjaJęzykowa], ścieżka); 
 }
 
 export default {
     zdobądźTekstyWersjiJęzykowej,
-    ustawWersjęJęzykową
 }

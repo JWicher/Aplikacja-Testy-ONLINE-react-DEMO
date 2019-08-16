@@ -9,26 +9,178 @@
         }
     }
     &__naglowek {
-        height: 70px;
         color: white;
         font-weight: bold;
-        &_zegar :last-child{ font-size: 30px; }
-      }
 
-    &__zadania{
-        height: calc( 100vh - 70px );
-        background: color;
-        overflow: auto;
+        &_zegar :last-child{
+            font-size: 30px;
+        }
+
+        & button {
+            height: 100%;
+        }
+
     }
 
-    &__zadanie {
-        & p:first-of-type {
-            font-size: 10px;
+    &__zadania{
+        height: calc(100vh - 70px);
+        overflow: auto;
+        background: color;
+
+        &_zadanie {
+            margin-bottom: 0px;
+
+            & p:first-of-type {
+                font-size: 10px;
+            }
+            
+            &_id-pytania{
+                font-weight: bold;
+                margin-right: 20px;
+            }
+
+            &_opcja-wyboru{
+                text-transform: none;
+                max-width: 98%;
+                margin-left: auto !important;
+                margin-right: auto !important;
+            }
+
         }
-        &_id-pytania{
-            font-weight: bold;
-            margin-right: 20px;
-        }
+
     }
 
 }
+
+@media all and (max-width: $md) {
+
+    .test__instrukcja h2{
+        font-size: 24px;
+    }
+}
+
+@media all and (max-width: $sm) {
+
+    .test{
+        &__instrukcja{
+            padding: 10px !important;
+        }
+
+        &__naglowek {
+            font-size: 12px;
+    
+            &_zegar :last-child{
+                font-size: 20px;
+            }
+
+            & button {
+                font-size: 12px;
+                padding: 10px 15px;
+            }
+        }
+    }
+}
+
+@media all and (max-width: $xs) {
+
+    .test{
+
+        &__naglowek {
+            font-size: 9px;
+            padding: 5px;
+    
+            &_zegar :last-child{
+                font-size: 12px;
+            }
+
+            & button {
+                font-size: 9px;
+                padding: 10px 8px;
+            }
+        }
+
+        &__zadania{
+            height: calc(100vh - 50px);
+            padding: 5px;
+
+            & > .container {
+                margin-top: 5px !important;
+                padding-left: 3px;
+                padding-right: 3px;
+            }
+
+            &_zadanie{
+                    margin-top: 2px !important;
+                    margin-bottom: 2px !important;
+                    padding: 5px !important;
+
+                & .lead {
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+
+                &_numer-zadania{
+                    margin-bottom: 10px;
+                }
+                
+                &_id-pytania{
+                    font-size: 10px;
+                    margin-right: 10px;
+                }
+
+                &_opcja-wyboru{
+                    font-size: 10px !important;
+                    padding-left: 5px !important;
+                }
+            }
+        }
+    }
+}
+
+@media all and (max-width: $md) and (max-height: $xs){
+
+    .test{
+
+        &__naglowek {
+            font-size: 16px;
+            padding: 5px;
+    
+            &_zegar :last-child{
+                font-size: 16px;
+            }
+
+            & button {
+                font-size: 14px;
+                padding: 10px 20px;
+                height: 100%;
+            }
+        }
+
+        &__zadania{
+            height: calc(100vh - 60px);
+
+            & > .container {
+                margin-top: 10px !important;
+                max-width: 100%;
+            }
+
+            &_zadanie{
+                    margin-top: 2px !important;
+                    margin-bottom: 2px !important;
+                    padding: 10px !important;
+
+
+                &_numer-zadania{
+                    font-size: 1px;
+                }
+                
+                &_opcja-wyboru{
+                    font-size: 12px !important;
+
+                }
+            }
+        }
+    }
+}
+
+

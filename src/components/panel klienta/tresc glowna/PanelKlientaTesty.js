@@ -106,7 +106,7 @@ class PanelKlientaTesty extends Component {
   
     render() { 
         const { testy } = this.state;
-        console.log(testy.length, 't')
+
         return ( 
             <div>
                 <MDBBtn color="success" onClick={ this.dodajTest } >{this.tekst.przycisk.dodajTest}</MDBBtn>

@@ -6,19 +6,19 @@ import Loader from '../współne/loader';
 import kodTestutService from '../../services/kodTestuService';
 import wspólneService from '../../services/wspólneService';
 import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
-import { connect } from 'react-redux';
 
 class WeryfikacjaKodu extends Component {
     constructor(){
         super()
         this.state = { 
             czekamNaOdpowiedźSerwera: false
-            }
+        }
 
+        this.schema = {
+            kod: Joi.string().min(13).max(13).required().error( () => {return { message: "Nieprawidłowa długość kodu."};})
+        };
     }
-    schema = {
-        kod: Joi.string().min(13).max(13).required().error( () => {return { message: "Nieprawidłowa długość kodu."};})
-    };
+    
 
     zdobąćTest = async () => {
         const obiektKoduDostępu = JSON.parse( localStorage.getItem("obiektKoduDostępu") );
@@ -67,8 +67,8 @@ class WeryfikacjaKodu extends Component {
 
     render() { 
         const { czekamNaOdpowiedźSerwera } = this.state;
-        const tekst = zdobądźTekstyWersjiJęzykowej("stronaGłówna.WeryfikacjaKodu")
-        const widokMenu = this.props.stanRedux.reducerStronaGłówna.widoczneMenu && window.innerWidth <= 991 ? "ukryj" : "";
+        const tekst = zdobądźTekstyWersjiJęzykowej("stronaGłówna.WeryfikacjaKodu" )
+        const widokMenu = window.store.getState().reducerStronaGłówna.widoczneMenu && window.innerWidth <= 991 ? "ukryj" : "";
 
         return ( 
             <div className={ `strona-glowna__weryfikacja-kodu align-self-center align-self-lg-end mr-md-4 animated fadeIn faster ${widokMenu}` }>
@@ -87,13 +87,4 @@ class WeryfikacjaKodu extends Component {
     }
 }
  
-
-const mapStateToProps = (state) => {
-    return { stanRedux: state };
-  };
-
-  
-  export default connect(
-      mapStateToProps
-    )(WeryfikacjaKodu)
-    
+export default WeryfikacjaKodu

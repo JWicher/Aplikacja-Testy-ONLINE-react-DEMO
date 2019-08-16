@@ -4,6 +4,8 @@ import { MDBBtn } from "mdbreact";
 import { NotificationManager } from 'react-notifications';
 import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
 import użytkownikService from '../../services/użytkownikService';
+import { connect } from 'react-redux';
+import { zamieńPrzycisk } from '../../redux/actions/actionsStronaGłówna';
 
 class InformacjaPotwierdzenieKonta extends Component {
     constructor(){
@@ -32,14 +34,13 @@ class InformacjaPotwierdzenieKonta extends Component {
         const wiadomośćNegacja = <p className='text-danger'>{tekst.wiadomośćNegacja}</p>;
 
         return ( 
-            <div className="strona-glowna__rejestracja-uzytkownika animated fadeIn faster" >
+            <div className="strona-glowna__rejestracja-uzytkownika align-self-center animated fadeIn faster" >
                  <div className="strona-glowna__rejestracja-uzytkownika_informacja p-5 animated fadeIn faster text-primary font-weight-bold">
-                        
-                        { potwierdzonyProfil ? wiadomośćPotwierdzenie : wiadomośćNegacja }
+                            { potwierdzonyProfil ? wiadomośćPotwierdzenie : wiadomośćNegacja }
                      
                          <Link to="/">
                              <div className="d-flex justify-content-center mt-2">
-                                 <MDBBtn color="default" onClick={ () => this.props.zamieńPrzycisk("kod")} >{tekst.przycisk}</MDBBtn>
+                                 <MDBBtn onClick={ () => this.props.zamieńPrzycisk("kod")} >{tekst.przycisk}</MDBBtn>
                              </div>
                          </Link>
     
@@ -49,4 +50,18 @@ class InformacjaPotwierdzenieKonta extends Component {
     }
 }
  
-export default InformacjaPotwierdzenieKonta;
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+  };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    zamieńPrzycisk: przycisk => dispatch( zamieńPrzycisk(przycisk) ),
+    }
+};
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(InformacjaPotwierdzenieKonta)

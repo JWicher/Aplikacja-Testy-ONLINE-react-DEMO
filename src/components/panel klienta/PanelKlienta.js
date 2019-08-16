@@ -7,6 +7,8 @@ import Naglowek from './nagłówek/Naglowek';
 import PanelKlientaUżytkownik from './tresc glowna/PanelKlientaUżytkownik';
 import WykazUzytkownikow from './tresc glowna/zakładka - użytkownik/WykazUzytkownikow';
 import użytkownikService from '../../services/użytkownikService';
+import { ustawEdytowanyElement } from '../../redux/actions/actionsPanelKlienta';
+import { connect } from 'react-redux';
 
 class PanelKlienta extends Component {
     constructor(){
@@ -19,6 +21,7 @@ class PanelKlienta extends Component {
         this.setState({otwartaZakładka: window.location.pathname})
     }
     zmianaZakładki = (zakładka) => {
+        this.props.ustawEdytowanyElement("");
         this.setState({otwartaZakładka: zakładka})
     }
     render() {
@@ -47,4 +50,19 @@ class PanelKlienta extends Component {
     }
 }
  
-export default PanelKlienta;
+// export default PanelKlienta;
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+  };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    ustawEdytowanyElement: edytowanyElement => dispatch( ustawEdytowanyElement(edytowanyElement) ),
+    }
+};
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PanelKlienta)

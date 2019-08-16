@@ -92,7 +92,7 @@ class InstrukcjaTestu extends Component {
         const { czekamNaOdpowiedźSerwera,  } = this.state;
         const { test } = this.state.obiektKoduDostępu;
         const { kandydat, czasRozpoczęciaTestu } = JSON.parse( localStorage.getItem("obiektKoduDostępu") );
-
+console.log(test)
         return ( 
             <div className="test__instrukcja d-flex align-items-center justify-content-center p-5 blue lighten-2">
                     <MDBJumbotron className="m-0">
@@ -101,9 +101,9 @@ class InstrukcjaTestu extends Component {
                         <hr />
 
                         { test.instrukcja.length > 0 &&
-                            <div className="test__instrukcja_info">
-                                <p className="mt-3 font-weight-bold">{this.tekst.podtytuły.informacja}</p>
-                                <p className="m-0">{test.instrukcja}</p> 
+                            <div className="test__instrukcja_info mt-3 m-0">
+                                <p className="font-weight-bold">{this.tekst.podtytuły.informacja}</p>
+                                <p>{test.instrukcja}</p> 
                                 <hr />
                             </div>
                         }

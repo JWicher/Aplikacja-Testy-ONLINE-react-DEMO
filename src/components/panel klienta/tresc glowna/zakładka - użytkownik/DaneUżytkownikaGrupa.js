@@ -4,33 +4,27 @@ import Loader from '../../../współne/loader';
 import GrupaWyszukiwanie from './GrupaWyszukiwanie';
 import GrupaRejestracja from './GrupaRejestracja';
 import { zdobądźTekstyWersjiJęzykowej } from '../../../../services/wersjaJęzykowaService';
+import { ustawEdytowanyElement } from '../../../../redux/actions/actionsPanelKlienta';
+import { connect } from 'react-redux';
 
 class DaneUżytkownikaGrupa extends Component {
     constructor(props){
         super(props);
         this.state = { 
             użytkownik: props.użytkownik,
-            trybEdycji: false,
             czekamNaOdpowiedźSerwera: false,
         } 
     }
-
-
-    przełączTrybEdycji = () => {
-        this.setState({trybEdycji: !this.state.trybEdycji})
-    }
-
 
     przypiszDoGrupy = (grupa) => {
         const { użytkownik } = this.state;
         użytkownik.firma = grupa;
         this.props.onWyślijAktualizacjęUżytkownika(użytkownik);
-        this.przełączTrybEdycji();
+        this.props.ustawEdytowanyElement();
     }
 
-
     niePrzypisujDoGrupy = () => {
-        this.przełączTrybEdycji();
+        this.props.ustawEdytowanyElement();
     }
     
     uruchomLoader = mode => {
@@ -41,22 +35,27 @@ class DaneUżytkownikaGrupa extends Component {
     }
 
     render(){
-        const { użytkownik, trybEdycji, czekamNaOdpowiedźSerwera } = this.state;
+        const { użytkownik, czekamNaOdpowiedźSerwera } = this.state;
+        const { edytowanyElement } = this.props.stanRedux.reducerPanelKlienta;
+
         const tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.użytkownik.DaneUżytkownikaGrupa");
 
         return ( 
             <React.Fragment>
-                { !trybEdycji && 
+                { edytowanyElement === "" && 
                     <React.Fragment>
                         <p className="mb-0 font-weight-bold">{tekst.grupa}</p>
                         <div className="d-flex">
                             <p className="ml-2 mr-4">{użytkownik.firma.nazwa !== "" ? użytkownik.firma.nazwa : tekst.niePrzypisano }</p>
-                            <i className="fas fa-edit " style={{cursor:"pointer"}} onClick={this.przełączTrybEdycji}></i>
+                            <i className="fas fa-edit "
+                                style={{cursor:"pointer"}}
+                                    onClick={ () => this.props.ustawEdytowanyElement("ustawienia-grupa")}>
+                            </i>
                         </div>
                     </React.Fragment>
                 }
 
-                { trybEdycji && 
+                { edytowanyElement === "ustawienia-grupa" && 
                     <div className="md-form d-flex flex-column align-items-start border border-danger p-2 animated fadeIn faster">
                         { !czekamNaOdpowiedźSerwera &&
                             <React.Fragment>
@@ -68,7 +67,10 @@ class DaneUżytkownikaGrupa extends Component {
                         
                         { czekamNaOdpowiedźSerwera && <Loader opcje="logo-obrot"/> }
 
-                        <MDBBtn className="" color="danger" size="sm" onClick={this.przełączTrybEdycji} >{tekst.przyciskZamknij}</ MDBBtn>
+                        <MDBBtn color="danger" size="sm"
+                            onClick={ () => this.props.ustawEdytowanyElement("")}
+                            >{tekst.przyciskZamknij}
+                        </ MDBBtn>
                     </div>
                 }
 
@@ -76,4 +78,18 @@ class DaneUżytkownikaGrupa extends Component {
         );
     }
 }
-export default DaneUżytkownikaGrupa;
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+  };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    ustawEdytowanyElement: edytowanyElement => dispatch( ustawEdytowanyElement(edytowanyElement) ),
+    }
+};
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DaneUżytkownikaGrupa)

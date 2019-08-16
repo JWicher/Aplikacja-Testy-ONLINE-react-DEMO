@@ -1,16 +1,17 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Joi from 'joi-browser';
 import { NotificationManager } from 'react-notifications';
 import OryginalneZadanie from './OryginalneZadanie';
 import EdytowaneZadanie from './EdytowaneZadanie';
 import { zdobądźTekstyWersjiJęzykowej } from '../../../../../services/wersjaJęzykowaService';
+import { ustawEdytowanyElement } from '../../../../../redux/actions/actionsPanelKlienta';
+import { connect } from 'react-redux';
 
-class Zadanie extends Component {
+class Zadanie extends PureComponent {
     constructor(props){
         super(props);
         this.state = { 
             zadanie: props.zadanie,
-            trybEdycji: false,
         }
         this.dostępneWartośćiId = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
         this.tekst = zdobądźTekstyWersjiJęzykowej("panelKlienta.trescGłówna.zakładki.testy.poziom3_szczegóły.Zadanie");
@@ -44,9 +45,7 @@ class Zadanie extends Component {
           return null;
     }
 
-    przełączTrybEdycji = () => {
-        this.setState({trybEdycji: !this.state.trybEdycji})
-    }
+   
 
     zapiszZmianęZadania = async() => {
         const { zadanie } = this.state;
@@ -55,7 +54,7 @@ class Zadanie extends Component {
             NotificationManager.error(bład);
             return; 
         }
-        this.przełączTrybEdycji();
+        this.props.ustawEdytowanyElement("");
 
         zadanie.tresc = zadanie.tresc.trim();
         zadanie.opcje_wyboru = zadanie.opcje_wyboru.map( opcja => Object.assign( {}, opcja, 
@@ -66,7 +65,7 @@ class Zadanie extends Component {
     }
     odrzućZmiany = () => {
         const zadanie = { ...this.props.zadanie }
-        this.przełączTrybEdycji();
+        this.props.ustawEdytowanyElement("");
         this.setState({zadanie})
     }
 
@@ -119,24 +118,29 @@ class Zadanie extends Component {
     }
 
     render() { 
-        const { zadanie, trybEdycji } = this.state;
+        const { zadanie } = this.state;
         const { użytkownikToAutor } = this.props;
+        const { edytowanyElement } = this.props.stanRedux.reducerPanelKlienta;
         
         if(!zadanie) return <p>Brak zadania</p>
         const dokonanoZmian = this.czyDokonanoZmian();
+        const stylPojemnika = edytowanyElement === `edytowane-zadanie-${zadanie.numer}` ? "p-2 border border-danger border-2" : ""; 
 
-        const stylPojemnika = trybEdycji ? "d-flex border border-danger border-2" : ""; 
         return ( 
             <div className={stylPojemnika}>
-                { !trybEdycji && <OryginalneZadanie
+                { edytowanyElement === ""
+                            && 
+                            <OryginalneZadanie
                                     zadanie={zadanie}
                                     użytkownikToAutor={użytkownikToAutor}
-                                    onPrzełączTrybEdycji={this.przełączTrybEdycji}
-                                    />}
-                { trybEdycji && <EdytowaneZadanie
+                                    />
+                }
+
+                { edytowanyElement === `edytowane-zadanie-${zadanie.numer}`
+                            &&
+                            <EdytowaneZadanie
                                     zadanie={zadanie}
                                     dokonanoZmian={dokonanoZmian}
-                                    onPrzełączTrybEdycji={this.przełączTrybEdycji}
                                     onPrzechwyćZmianęTreści={this.przechwyćZmianęTreści}
                                     onPrzechwyćZmianęTreściOpcji={this.przechwyćZmianęTreściOpcji}
                                     onPrzechwyćZmianęPoprawnejOdpowiedzi={this.onPrzechwyćZmianęPoprawnejOdpowiedzi}
@@ -144,11 +148,31 @@ class Zadanie extends Component {
                                     onOdrzućZmiany={this.odrzućZmiany}
                                     onDodajOpcję={this.dodajOpcję}
                                     onUsuńOpcję={this.usuńOpcję}
-                                    onUsuńZadanie={ () => { this.przełączTrybEdycji(); this.props.onUsuńZadanie(zadanie) } }
-                                    />}
+                                    onUsuńZadanie={
+                                        () => {
+                                            this.props.ustawEdytowanyElement("");
+                                            this.props.onUsuńZadanie(zadanie) }
+                                        }
+                                    />
+                }
+
             </div>
          );
     }
 }
 
-export default Zadanie;
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+  };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+    ustawEdytowanyElement: edytowanyElement => dispatch( ustawEdytowanyElement(edytowanyElement) ),
+    }
+};
+  
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Zadanie)

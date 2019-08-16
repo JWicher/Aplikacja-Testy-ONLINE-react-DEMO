@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { MDBJumbotron, MDBContainer,MDBAlert } from "mdbreact";
+import { MDBJumbotron, MDBAlert } from "mdbreact";
 import OpcjaWyboru from './OpcjaWyboru';
 import { zdobądźTekstyWersjiJęzykowej } from '../../services/wersjaJęzykowaService';
 
@@ -17,6 +17,7 @@ class Zadanie extends PureComponent {
    const { zadanie } = this.props;
    this.setState({ obecnieWybranaOpcja: zadanie.udzielonaOdpowiedz });
   }
+
   zaznaczOpcję = (nowoWybranaOpcja) => {
     const { zadanie, onZaktualizujOdpowiedzi } = this.props;
     let { obecnieWybranaOpcja } = this.state;
@@ -24,28 +25,29 @@ class Zadanie extends PureComponent {
         obecnieWybranaOpcja = obecnieWybranaOpcja.id === nowoWybranaOpcja.id ? {id: "", tresc: ""} : nowoWybranaOpcja;
     onZaktualizujOdpowiedzi( {numerZadania: zadanie.numer, aktualnaOdpowiedz: obecnieWybranaOpcja } )
     this.setState({ obecnieWybranaOpcja });
-
   }
+
   zapiszTrescZadaniaOtwartego = ({ currentTarget }) => {
     const { zadanie, onZaktualizujOdpowiedzi } = this.props;
     const tresc = currentTarget.value !== "" ? currentTarget.value :  "";
     const odpowiedz = { numerZadania: zadanie.numer, aktualnaOdpowiedz: { id: "", tresc } };
     onZaktualizujOdpowiedzi(odpowiedz)
   }
+  
   zakazWklejania = (e) => {
     e.preventDefault();
     this.setState({ probaKopiowania: true })
     setTimeout( ()=> {this.setState({probaKopiowania: false}) }, 3000 )
   }
+
   wygenerujZadanieZamknięte(zadanie){
     const { obecnieWybranaOpcja } = this.state;
     const tekst = zdobądźTekstyWersjiJęzykowej("test.Zadanie");
 
     return (
-      <MDBJumbotron className="p-3">
-              <p className="text-left">{`${tekst.etykietaZadanieNr} ${zadanie.numer}`} </p>
+      <MDBJumbotron className="p-3 test__zadania_zadanie">
+              <p className="text-left test__zadania_zadanie_numer-zadania">{`${tekst.etykietaZadanieNr} ${zadanie.numer}`} </p>
               <p className="lead"> {zadanie.tresc} </p>
-              <hr className="my-0" />
               { zadanie.opcje_wyboru.map( opcja =>
                   <OpcjaWyboru
                         key={opcja.id}
@@ -65,11 +67,10 @@ class Zadanie extends PureComponent {
 
     const trescOdpowiedzi = odpowiedzi[index].odpowiedz !== "" ? odpowiedzi[index].odpowiedz.tresc : "";
     return (
-      <MDBJumbotron className="p-3">
-              <p className="text-ri">{`${tekst.etykietaZadanieNr} ${zadanie.numer}`}</p>
+      <MDBJumbotron className="p-3 test__zadania_zadanie">
+              <p className="text-left test__zadania_zadanie_numer-zadania">{`${tekst.etykietaZadanieNr} ${zadanie.numer}`}</p>
               <h2 className="lead font-weight-bold"> {zadanie.tytul} </h2>
               <p className="lead"> {zadanie.tresc} </p>
-              <hr className="my-0" />
               <div className="form-group shadow-textarea">
                 { this.state.probaKopiowania && <MDBAlert className="" color="danger">{tekst.informacjaPrzyPróbieWklejania}</MDBAlert> }
                 <textarea
@@ -88,10 +89,10 @@ class Zadanie extends PureComponent {
   render() { 
     const { zadanie } = this.props;
     return ( 
-      <MDBContainer className="mt-4 text-left test__zadanie">
+      <div className="mt-4 text-left container">
               { zadanie.typ === "zamknięte" &&  this.wygenerujZadanieZamknięte(zadanie) }
               { zadanie.typ === "otwarte" &&  this.wygenerujZadanieOtwarte(zadanie) }
-      </MDBContainer>
+      </div>
     );
   }
 }

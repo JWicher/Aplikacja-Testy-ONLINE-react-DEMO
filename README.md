@@ -44,14 +44,15 @@ Frontend:
 <br/>
 
 Backend:
-- autorska aplikacja napisana w Node.js / express,
+- własna aplikacja napisana w Node.js / express,
 - zastosowanie funkcji typu middleware,
+- utworzene osobnego wątku dla operacji generowania pliku PDF (kilka sekund / plik) - child_process.fork(),
 - ukrywanie haseł użytkowników z użyciem biblioteki bcrypt,
 - bezpieczna i szybka autoryzacja użytkowników z wykorzystaniem JSON Web Token,
 - przechowywanie wrażliwych danych w zmiennych środowiskowych na serwerze, np. adres bazy danych,* \"salt"*,
 - @hapi/joi - walidacja otrzymanych danych od użytkowników,
 - baza danych - mongoDB, mongoose, modele i zapytania,
-- generowanie pliku PDF z danych obiektu JSON - własny szablon .hbr + biblioteka puppeteer,
+- generowanie pliku PDF z danych obiektu JSON - własny szablon .hbs + biblioteka puppeteer,
 - obsługa operacji CRUD przez interfejsy API wg zasobów, np. api/tests, api/users,
 - dodatkowe biblioteki pomocnicze: fs-extra, nodemailer, helmet, compression, cors,
 - podział struktury kodu, tzn. osobno routes, models, middlewares, startup files,

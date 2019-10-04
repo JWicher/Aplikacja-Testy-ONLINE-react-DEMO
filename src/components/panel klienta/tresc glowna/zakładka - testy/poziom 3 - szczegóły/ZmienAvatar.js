@@ -34,7 +34,7 @@ class ZmienAvatar extends Component {
         
                         { listaAvatarów.map( avatar => 
                             <div key={avatar}
-                                 className={`panel-klienta__tresc_test-modyfikuj-avatar-avatar ${this.state.avatar === avatar ? "ble border-default animated tada slow infinite" : ""}`}
+                                 className={`panel-klienta__tresc_test-modyfikuj-avatar-avatar ${this.state.avatar === avatar ? "border-solid-size-3px border-default animated tada slow infinite" : ""}`}
                                  style={{backgroundImage: `url("/images/avatary/${avatar}")`, cursor: "pointer"}}
                                  onClick={ () => this.zmieńZaznaczonyAvatar(avatar) }
                                  >

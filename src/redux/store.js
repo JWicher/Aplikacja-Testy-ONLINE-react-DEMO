@@ -13,9 +13,12 @@ const stanPoczatkowy = {
     wersjaJęzykowa: użytkownik ? użytkownik.język : "en"
   },
   reducerPanelKlienta: {
-    edytowanyElement: ""
+    testy: [],
+    id_otwartegoTestu: "",
+    edytowanyElement: "",
+    otwartaZakładka: ""
   }
 };
 
-export const store = createStore( rootReducer, stanPoczatkowy );
+export const store = createStore(rootReducer, stanPoczatkowy);
 window.store = store;

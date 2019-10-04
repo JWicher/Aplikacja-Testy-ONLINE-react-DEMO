@@ -4,26 +4,37 @@ import ModyfikowanieTestu from './poziom 3 - szczegóły/ModyfikujTest';
 import ZadaniaTestu from './poziom 3 - szczegóły/ZadaniaTestu';
 import { MDBTabContent, MDBTabPane } from "mdbreact";
 
-class PanelKlientaTesPoziom3 extends PureComponent {
-    state = {  }
-    render() { 
-        const { test, activeItem } = this.props;
+import { connect } from 'react-redux';
 
-        return ( 
-                <MDBTabContent activeItem={activeItem} >
-                    <MDBTabPane className="animated fadeIn" tabId="1" role="tabpanel">
-                        <ZadaniaTestu test={test} onZapiszZmiany={this.props.onZapiszZmiany} />
-                    </MDBTabPane>
-                    <MDBTabPane className="animated fadeIn" tabId="2" role="tabpanel">
-                        <ModyfikowanieTestu test={test} onUsuńTest={this.props.onUsuńTest}
-                                            onZapiszZmiany={this.props.onZapiszZmiany} />
-                    </MDBTabPane>
-                    <MDBTabPane className="animated fadeIn" tabId="3" role="tabpanel">
-                        <GeneratorKodu test={test}/>
-                    </MDBTabPane>
-                </MDBTabContent>  
-         );
+class PanelKlientaTesPoziom3 extends PureComponent {
+    state = {}
+    render() {
+        const { test } = this.props;
+        const { otwartaZakładka } = this.props.stanRedux.reducerPanelKlienta;
+
+        return (
+            <MDBTabContent activeItem={otwartaZakładka} >
+                <MDBTabPane className="animated fadeIn" tabId={`${test._id}-1`} role="tabpanel">
+                    <ZadaniaTestu test={test} onZapiszZmiany={this.props.onZapiszZmiany} />
+                </MDBTabPane>
+                <MDBTabPane className="animated fadeIn" tabId={`${test._id}-2`} role="tabpanel">
+                    <ModyfikowanieTestu test={test}
+                        onZapiszZmiany={this.props.onZapiszZmiany} />
+                </MDBTabPane>
+                <MDBTabPane className="animated fadeIn" tabId={`${test._id}-3`} role="tabpanel">
+                    <GeneratorKodu test={test} />
+                </MDBTabPane>
+            </MDBTabContent>
+        );
     }
 }
- 
-export default PanelKlientaTesPoziom3;
+
+
+const mapStateToProps = (state) => {
+    return { stanRedux: state };
+};
+
+
+export default connect(
+    mapStateToProps
+)(PanelKlientaTesPoziom3)

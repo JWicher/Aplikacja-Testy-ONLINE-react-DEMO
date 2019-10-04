@@ -68,11 +68,51 @@
     animation: obrot infinite linear 1.2s;
 }
 
+.logoRWD,
+.logoRWD::before,
+.logoRWD::after{
+    width: 20px;
+    height: 20px;
+    border-top-width: 2px;
+}
+.logoRWD::before,
+.logoRWD::after{
+    top: -2px;
+}  
 @keyframes obrot{
     from{
         transform: rotate(0deg);
     }
     to{
         transform: rotate(359deg);
+    }
+}
+
+
+@media (min-width: 576px) { // sm
+    .logoRWD,
+    .logoRWD::before,
+    .logoRWD::after{
+        width: 30px;
+        height: 30px;
+        border-top-width: 2px;
+    }
+    .logoRWD::before,
+    .logoRWD::after{
+        top: -2px;
+    }
+
+}
+@media (min-width: 768px) { // md
+    .logoRWD,
+    .logoRWD::before,
+    .logoRWD::after{
+            width: 40px;
+            height: 40px;
+            border-top-width: 3px;
+        }
+    .logoRWD::before,
+    .logoRWD::after{
+        top: -3px;
     }
 }

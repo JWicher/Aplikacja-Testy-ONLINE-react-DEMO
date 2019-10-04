@@ -9,7 +9,7 @@
         top: 0px;
         height: calc( 100vh - 70px);
         width: 100%;
-        background-image: url('css/images/tlo2.jpg');
+        background-image: url('css/images/strona-główna-tlo-do-1199px.jpg');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
@@ -131,5 +131,16 @@
         width: 100vw;
         height: 70px;
         z-index: -1
+    }
+}
+
+
+@media all and (max-width: $md) {
+    .strona-glowna{
+    
+        &::before{
+            background-image: url('css/images/strona-główna-tlo-do-767px.jpg');
+
+        }
     }
 }

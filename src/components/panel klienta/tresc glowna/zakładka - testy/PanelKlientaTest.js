@@ -3,70 +3,88 @@ import { MDBBtn, MDBCollapse } from "mdbreact";
 import PanelKlientaTesPoziom1 from './PanelKlientaTest-Poziom1';
 import PanelKlientaTesPoziom2 from './PanelKlientaTest-Poziom2';
 import PanelKlientaTesPoziom3 from './PanelKlientaTest-Poziom3';
+import { connect } from 'react-redux';
+import { rozwińTest, rozwińZakładkę, ustawEdytowanyElement } from '../../../../redux/actions/actionsPanelKlienta';
 
 class PanelKlientaTest extends PureComponent {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
-      test: props.test    
+      test: props.test,
     }
   }
 
   componentDidMount() {
-    this.setState({test: this.props.test})
+    this.setState({ test: this.props.test })
   }
 
   static getDerivedStateFromProps(props, state) {
-    if ( JSON.stringify(props.test) !== JSON.stringify(state.test) ) {
-        return { test: props.test };
+    if (JSON.stringify(props.test) !== JSON.stringify(state.test)) {
+      return { test: props.test };
     }
+
     return null;
   }
 
 
+  zawijanieTestu = (collapse_Test_ID) => () => {
+    const { id_otwartegoTestu } = this.props.stanRedux.reducerPanelKlienta;
+    let ustawianaWartość = collapse_Test_ID;
 
-  zawijanieTestu = (collapseID) => () => {
-    this.setState(prevState => ({
-      collapseID: prevState.collapseID !== collapseID ? collapseID : "",
-      activeItem: ""
-    }));
-  }
-  wyświetlZakładkę = tab => e => {
-    if (this.state.activeItem !== tab) {
-      this.setState({
-        activeItem: tab
-      });
+    if (id_otwartegoTestu === collapse_Test_ID) {
+      ustawianaWartość = "";
     }
-    else this.setState({ activeItem: "" })
-  };
+
+    this.props.rozwińTest(ustawianaWartość)
+    this.props.rozwińZakładkę("")
+    this.props.ustawEdytowanyElement("")
+
+  }
+
   onZapiszZmianyIZwińTest = (zmiany) => {
     this.props.onZapiszZmiany(zmiany);
-    if(!zmiany.zadania)
-      this.setState({ activeItem:''});
+    if (!zmiany.zadania) {
+      this.props.rozwińZakładkę("")
+      this.props.ustawEdytowanyElement("")
+    }
   }
-  render() { 
+  render() {
     const { test } = this.state;
+    const { id_otwartegoTestu } = this.props.stanRedux.reducerPanelKlienta;
+
     if (!test) return <p>Brak testu</p>;
 
     return (
-        <div className="panel-klienta__tresc p-0 border-1 border-primary btn-block">
+      <div className="panel-klienta__tresc_test p-0 border-1 border-primary btn-block">
 
-            <MDBBtn className="m-0" color="link" outline block onClick={this.zawijanieTestu("basicCollapse")} >
-                <PanelKlientaTesPoziom1 test={test} />
-            </MDBBtn>
+        <MDBBtn className="m-0 p-2 p-sm-3 p-md-4" color="link" outline block onClick={this.zawijanieTestu(test._id)} >
+          <PanelKlientaTesPoziom1 test={test} />
+        </MDBBtn>
 
-            <MDBCollapse id="basicCollapse" isOpen={this.state.collapseID}>
-                <div className="text-dark">
-                    <PanelKlientaTesPoziom2 test={test} activeItem={this.state.activeItem} toggle={this.wyświetlZakładkę} />
-                    <PanelKlientaTesPoziom3 test={test} activeItem={this.state.activeItem}
-                                onUsuńTest={this.props.onUsuńTest}
-                                onZapiszZmiany={ this.onZapiszZmianyIZwińTest } />
-                </div>
-            </MDBCollapse>
+        <MDBCollapse id={test._id} isOpen={id_otwartegoTestu === test._id}>
+          <PanelKlientaTesPoziom2 test={test} />
+          <PanelKlientaTesPoziom3 test={test} onZapiszZmiany={this.onZapiszZmianyIZwińTest} />
+        </MDBCollapse>
 
-        </div>
+      </div>
     )
   }
 }
- 
-export default PanelKlientaTest;
+
+
+const mapStateToProps = (state) => {
+  return { stanRedux: state };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    rozwińTest: test => dispatch(rozwińTest(test)),
+    rozwińZakładkę: zakładka => dispatch(rozwińZakładkę(zakładka)),
+    ustawEdytowanyElement: edytowanyElement => dispatch(ustawEdytowanyElement(edytowanyElement)),
+  }
+};
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PanelKlientaTest)

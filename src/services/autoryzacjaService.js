@@ -9,6 +9,8 @@ axios.defaults.headers.common['x-auth-token'] = getJwt();
 export async function login( email, haslo ){
     const { data: jwt } = await httpService.post(apiEndPoint + "/", { email, haslo } );
     localStorage.setItem(tokenKey, jwt);
+    axios.defaults.headers.common['x-auth-token'] = getJwt();
+
     return jwt;
 }
 export function setJwt(jwt){

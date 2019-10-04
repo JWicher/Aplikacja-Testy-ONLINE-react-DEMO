@@ -60,7 +60,7 @@ const tekstyWersjiJęzykowych = {
                 }
             },
             InstrukcjaTestu: {
-                podtytuły:{
+                podtytuły: {
                     informacja: "Informacja",
                     inputy: "Proszę wprowadzić swoje dane"
                 },
@@ -160,7 +160,7 @@ const tekstyWersjiJęzykowych = {
                             }
                         },
                         KodTestuNaglowek: {
-                            lp:"#",
+                            lp: "#",
                             dataUtworzenia: "Data utworzenia",
                             kandydat: "Kandydat",
                             nazwaTestu: "Test",
@@ -386,16 +386,16 @@ const tekstyWersjiJęzykowych = {
                             tytuł: "Ustawienia języka",
                             trybEdycji: "Tryb edycji",
                             pełnaNazwaJęzyka: {
-                                    pl: "polski",
-                                    en: "angielski"
-                                },
-                                notyfikacja: {
-                                    błądJęzyk: "Proszę określić język"
-                                },
-                                przycisk: {
-                                    zamknij: "Zamknij",
-                                    zapisz: "Zapisz"
-                                }
+                                pl: "polski",
+                                en: "angielski"
+                            },
+                            notyfikacja: {
+                                błądJęzyk: "Proszę określić język"
+                            },
+                            przycisk: {
+                                zamknij: "Zamknij",
+                                zapisz: "Zapisz"
+                            }
                         }
                     }
                 }
@@ -461,7 +461,7 @@ const tekstyWersjiJęzykowych = {
                 }
             },
             InstrukcjaTestu: {
-                podtytuły:{
+                podtytuły: {
                     informacja: "Information",
                     inputy: "Please enter your name and surname"
                 },
@@ -561,7 +561,7 @@ const tekstyWersjiJęzykowych = {
                             }
                         },
                         KodTestuNaglowek: {
-                            lp:"#",
+                            lp: "#",
                             dataUtworzenia: "Created on",
                             kandydat: "Candidate",
                             nazwaTestu: "Test",
@@ -787,8 +787,8 @@ const tekstyWersjiJęzykowych = {
                             tytuł: "Language settings",
                             trybEdycji: "Edit mode",
                             pełnaNazwaJęzyka: {
-                                    pl: "polish",
-                                    en: "english"
+                                pl: "polish",
+                                en: "english"
                             },
                             notyfikacja: {
                                 błądJęzyk: "Please specify language"
@@ -806,12 +806,21 @@ const tekstyWersjiJęzykowych = {
 }
 
 
-export function zdobądźTekstyWersjiJęzykowej(ścieżka){
-    const { wersjaJęzykowa }  = window.store.getState().reducerWersjaJęzkowa;
-
-    return get(tekstyWersjiJęzykowych[wersjaJęzykowa], ścieżka); 
+export function zdobądźTekstyWersjiJęzykowej(ścieżka) {
+    let { wersjaJęzykowa } = window.store.getState().reducerWersjaJęzkowa;
+    wersjaJęzykowa = wersjaJęzykowa ? wersjaJęzykowa : pobierzJęzykZLocalStorage()
+    return get(tekstyWersjiJęzykowych[wersjaJęzykowa], ścieżka);
 }
 
+const key = 'wersjaJęzykowa'
+export function ustawJęzykWLocalStorage(język) {
+    localStorage.setItem(key, język)
+}
+export function pobierzJęzykZLocalStorage(język) {
+    localStorage.getItem(key)
+}
 export default {
     zdobądźTekstyWersjiJęzykowej,
+    ustawJęzykWLocalStorage,
+    pobierzJęzykZLocalStorage
 }

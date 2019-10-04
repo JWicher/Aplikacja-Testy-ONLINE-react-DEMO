@@ -22,8 +22,8 @@ html, body {
 *::-webkit{
   &-scrollbar {
       position: absolute;
-      width: 7px;
-      &-track { -webkit-box-shadow: inset 0 0 6px #0d47a1 }
+      width: 6px;
+      &-track { -webkit-box-shadow: inset 0 0 4px #0d47a1 }
       &-thumb {
           border: 1px solid black;
           background-color: #0d47a1;
@@ -35,4 +35,14 @@ html, body {
 
 .kura{
     border-radius: 10rem
+}
+
+@media (min-width: 576px) { // sm
+    *::-webkit{
+        &-scrollbar {
+            width: 12px;
+            &-track { -webkit-box-shadow: inset 0 0 10px #0d47a1 }
+        }
+      }
+      
 }

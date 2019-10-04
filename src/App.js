@@ -5,7 +5,6 @@ import StronaGlowna from './components/strona główna/StronaGlowna';
 import TestWezel from './components/test/TestWezel';
 import PanelKlienta from './components/panel klienta/PanelKlienta';
 import {NotificationContainer} from 'react-notifications';
-import httpService from "./services/httpService";
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -15,9 +14,7 @@ class App extends Component {
       document.title = "JW TESTY ONLINE"
   }
 
-  async componentDidMount() {
-    await httpService.get()
-  }
+
   
   render() { 
     return ( 

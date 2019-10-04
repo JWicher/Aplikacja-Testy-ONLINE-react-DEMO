@@ -5,8 +5,8 @@
     background: rgba(255, 255, 255, 0.1)
 }
 
-.ble{
-    border: red solid 3px;
+.border-solid-size-3px{
+    border: solid 3px;
 }
 
 .przycisk-z-loaderem{
@@ -33,4 +33,124 @@
 
 .jw-overflow-y{
     overflow-y: visible !important;
+}
+
+
+
+.JW_RWD-h1{
+    font-size: 12px
+}
+.JW_RWD-h2{
+    font-size: 10px
+}
+.JW_RWD-h5{
+    font-size: 8px
+}
+.JW_RWD-p{
+    font-size: 8px
+}
+
+.JW_RWD-button{
+    font-size: 8px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    white-space: nowrap;
+}
+.JW_RWD-button-sm{
+    font-size: 8px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    border-width: 1px !important;
+}
+@media (min-width: 576px) { // sm
+    .JW_RWD-h1{
+        font-size: 24px
+    }
+    .JW_RWD-h2{
+        font-size: 18px
+    }
+    .JW_RWD-h5{
+        font-size: 12px
+    }
+    .JW_RWD-p{
+        font-size: 10px
+    }
+    .JW_RWD-p-bigger{
+        font-size: 12px
+    }
+    .JW_RWD-button{
+        font-size: 9px !important; 
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+    .JW_RWD-button-sm{
+        font-size: 8px !important; 
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+}
+@media (min-width: 768px) { // md
+    .JW_RWD-h1{
+        font-size: 28px
+    }
+    .JW_RWD-h2{
+        font-size: 24px
+    }
+    .JW_RWD-h5{
+        font-size: 18px
+    }
+    .JW_RWD-p{
+        font-size: 12px
+    }
+    .JW_RWD-p-bigger{
+        font-size: 14px
+    }
+    .JW_RWD-button{
+        font-size: 12px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+    }
+    .JW_RWD-button-sm{
+        font-size: 10px !important; 
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 6px !important;
+        padding-bottom: 6px !important;
+        border-width: 2px !important;
+    }
+
+}
+
+@media (min-width: 992px) { // lg
+    .JW_RWD-h1{
+        font-size: 32px
+    }
+    .JW_RWD-h2{
+        font-size: 28px
+    }
+    .JW_RWD-h5{
+        font-size: 22px
+    }
+    .JW_RWD-p{
+        font-size: 14px
+    }
+    .JW_RWD-p-bigger{
+        font-size: 16px
+    }
+    .JW_RWD-button{
+        font-size: 14px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
 }

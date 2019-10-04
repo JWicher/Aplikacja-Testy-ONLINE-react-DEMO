@@ -7,61 +7,66 @@ import Naglowek from './nagłówek/Naglowek';
 import PanelKlientaUżytkownik from './tresc glowna/PanelKlientaUżytkownik';
 import WykazUzytkownikow from './tresc glowna/zakładka - użytkownik/WykazUzytkownikow';
 import użytkownikService from '../../services/użytkownikService';
-import { ustawEdytowanyElement } from '../../redux/actions/actionsPanelKlienta';
+import { rozwińTest, rozwińZakładkę, ustawEdytowanyElement } from '../../redux/actions/actionsPanelKlienta';
 import { connect } from 'react-redux';
 
 class PanelKlienta extends Component {
-    constructor(){
+    constructor() {
         super();
-        this.state = { 
+        this.state = {
             otwartaZakładka: "/panel-klienta/testy",
-         }
+        }
     }
     componentDidMount() {
-        this.setState({otwartaZakładka: window.location.pathname})
+        this.setState({ otwartaZakładka: window.location.pathname })
     }
     zmianaZakładki = (zakładka) => {
-        this.props.ustawEdytowanyElement("");
-        this.setState({otwartaZakładka: zakładka})
+
+        this.props.rozwińTest("")
+        this.props.rozwińZakładkę("");
+        this.props.ustawEdytowanyElement("")
+
+        this.setState({ otwartaZakładka: zakładka })
     }
     render() {
         const użytkownik = użytkownikService.getUserFromJWT();
-        return ( 
-            <div className="panel-klienta p-0 col d-flex flex-column">
-                    <Naglowek />
-                <div className="col panel-klienta__czesc-robocza container-fluid ">
-                    <div className="row h-100">
-                        <div className=" panel-klienta__menu-boczne">
-                           <MenuBoczne onZmianaZakładki={this.zmianaZakładki} otwartaZakładka={this.state.otwartaZakładka}/>
-                        </div>
-                        <div className="col panel-klienta__tresc">
+        return (
+            <div className="panel-klienta p-0 col">
+                <Naglowek />
+                <div className="col panel-klienta__czesc-robocza">
+                    <div className="row d-flex flex-column flex-sm-row h-100">
+                        {/* <div className="col col-sm-2 px-2 panel-klienta__menu-boczne d-flex flex-column flex-grow-0"> */}
+                        <MenuBoczne onZmianaZakładki={this.zmianaZakładki} otwartaZakładka={this.state.otwartaZakładka} />
+                        {/* </div> */}
+                        <div className="col px-2 panel-klienta__tresc">
                             <Switch>
                                 <Route path="/panel-klienta/testy" component={PanelKlientaTesty} />
                                 <Route path="/panel-klienta/kody" component={PanelKlientaKody} />
                                 <Route path="/panel-klienta/uzytkownik" component={PanelKlientaUżytkownik} />
-                                { użytkownik.czyAdmin && <Route path="/panel-klienta/uzytkownicy" component={WykazUzytkownikow} /> }
+                                {użytkownik.czyAdmin && <Route path="/panel-klienta/uzytkownicy" component={WykazUzytkownikow} />}
                                 <Route path="/panel-klienta/" component={PanelKlientaTesty} />
                             </Switch>
                         </div>
                     </div>
                 </div>
             </div>
-         );
+        );
     }
 }
- 
-// export default PanelKlienta;
+
 
 const mapStateToProps = (state) => {
     return { stanRedux: state };
-  };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-    ustawEdytowanyElement: edytowanyElement => dispatch( ustawEdytowanyElement(edytowanyElement) ),
+        rozwińTest: test => dispatch(rozwińTest(test)),
+        rozwińZakładkę: zakładka => dispatch(rozwińZakładkę(zakładka)),
+        ustawEdytowanyElement: edytowanyElement => dispatch(ustawEdytowanyElement(edytowanyElement)),
     }
 };
-  
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
